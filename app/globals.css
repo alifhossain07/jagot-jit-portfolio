@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Against";
+  src: url("/fonts/against%20regular.otf") format("opentype"),
+       url("/fonts/against%20regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bulgatti";
+  src: url("/fonts/Bulgatti.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.font-against {
+  font-family: "Against", sans-serif;
+}
+
+.font-bulgatti {
+  font-family: "Bulgatti", cursive;
+}
+
+.font-bricolage {
+  font-family: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
+}
+
+.font-geist {
+  font-family: "Geist", "Helvetica Neue", Arial, sans-serif;
+}
+
+.font-geist-mono {
+  font-family: "Geist Mono", "SFMono-Regular", "Roboto Mono", monospace;
+}
+
+.font-space-grotesk {
+  font-family: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
+}
