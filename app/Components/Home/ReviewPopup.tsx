@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Quote } from 'lucide-react';
+import Image from 'next/image';
 import reviews from '@/data/reviews.json';
 
 const ReviewPopup = () => {
@@ -18,23 +19,23 @@ const ReviewPopup = () => {
       setRandomReview(reviews[randomIndex]);
       setIsVisible(true);
 
-      // Auto-close after 6 seconds
+      // Auto-close after 10 seconds
       timer = setTimeout(() => {
         setIsVisible(false);
-        // Wait 6 seconds before showing the next one
-        timer = setTimeout(showNextReview, 6000);
-      }, 6000);
+        // Wait 10 seconds before showing the next one
+        timer = setTimeout(showNextReview, 10000);
+      }, 10000);
     };
 
-    // Initial wait time of 6 seconds before first appearance
-    timer = setTimeout(showNextReview, 6000);
+    // Initial wait time of 10 seconds before first appearance
+    timer = setTimeout(showNextReview, 10000);
 
     return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
-    // The cycle will continue naturally after the next 6s hide period
+    // The cycle will continue naturally after the next 10s hide period
   };
 
   if (!randomReview) return null;
@@ -74,8 +75,13 @@ const ReviewPopup = () => {
               </p>
 
               <div className="flex items-center gap-3 pt-2">
-                <div className="w-8 h-8 rounded-lg bg-[#c29226]/20 border border-[#c29226]/30 flex items-center justify-center text-[10px] font-bold text-[#c29226]">
-                  {randomReview.name.charAt(0)}
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10">
+                  <Image
+                    src={randomReview.image}
+                    alt={randomReview.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-white font-geist-mono text-[11px] font-medium leading-tight">
@@ -93,7 +99,7 @@ const ReviewPopup = () => {
               key={randomReview.id} // Re-trigger animation when review changes
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 6, ease: "linear" }}
+              transition={{ duration: 10, ease: "linear" }}
               className="absolute bottom-0 left-0 h-1 bg-[#c29226]/50 w-full origin-left"
             />
           </div>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaSpotify, FaTiktok } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaSpotify, FaWhatsapp } from 'react-icons/fa';
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -11,9 +11,9 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com", icon: FaFacebookF },
-  { label: "Instagram", href: "https://instagram.com", icon: FaInstagram },
-  { label: "TikTok", href: "https://tiktok.com", icon: FaTiktok },
+  { label: "Facebook", href: "https://www.facebook.com/jagot.jit.7", icon: FaFacebookF },
+  { label: "Instagram", href: "https://www.instagram.com/jagot_jit_/", icon: FaInstagram },
+  { label: "WhatsApp", href: "https://wa.me/8801761629696", icon: FaWhatsapp },
   { label: "Spotify", href: "https://spotify.com", icon: FaSpotify },
 ];
 
@@ -21,7 +21,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-midnight pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden" id="footer">
+    <footer className="bg-[#525333] pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden" id="footer">
       {/* Background Decorative Texture */}
       <div className="absolute inset-0 z-0 opacity-5 pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#c29226]/20 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2" />

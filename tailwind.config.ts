@@ -40,7 +40,7 @@ const config: Config = {
       animation: {
         "float": "float 6s ease-in-out infinite",
         "pulse-slow": "pulse-slow 8s ease-in-out infinite",
-        marquee: "marquee 7s linear infinite",
+        marquee: "marquee 10s linear infinite",
       },
     },
   },

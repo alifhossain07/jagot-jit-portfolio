@@ -4,34 +4,20 @@
     "name": "Raahim Rubaiyat Teertho",
     "designation": "Guitarist, Singer, Songwriter (EIDA, TheCleanupCrew, Quiet on Purpose, North Dhaka Khaep Service)",
     "review": "Working with Jagot Jit is always a delight. He's been my go to producer for a while now. He's very fun and easy to work with. His communication skills along with his music production skills are admirable. I highly recommend that you approach Jagot for your future musical endeavors.",
-    "image": "/images/clients/raahim.jpg"
+    "image": "/images/teertho.jpg"
   },
   {
     "id": "2",
     "name": "Shuprio Shahi Teerno",
     "designation": "Keyboardist",
     "review": "Jagot's production style is very unique and cooperative. It's very easy to work with him and you can feel a sense of security that he will shape your song exactly the way you envisioned it.",
-    "image": "/images/clients/shuprio.jpg"
+    "image": "/images/teerno.jpg"
   },
   {
     "id": "3",
-    "name": "Ahsan Habib",
-    "designation": "Lead Vocalist, The Melodic Wave",
-    "review": "Jagot transformed our raw band recordings into a polished, radio-ready masterpiece. His attention to detail in the mixing phase is unparalleled in the local scene.",
-    "image": "/images/clients/demo1.jpg"
-  },
-  {
-    "id": "4",
-    "name": "Sajid Ibrahim",
-    "designation": "Music Director, SoundScape Studios",
-    "review": "An absolute professional with a deep understanding of analog warmth and digital precision. Jagot mastered our latest album, and the sonic depth he achieved is incredible.",
-    "image": "/images/clients/demo2.jpg"
-  },
-  {
-    "id": "5",
-    "name": "Nafis Fuad",
-    "designation": "Independent Electronic Artist",
-    "review": "Collaborating with Jagot on my latest EP was a game-changer. His production insights added layers of complexity I hadn't even considered. Truly a sonic architect.",
-    "image": "/images/clients/demo3.jpg"
+    "name": "Ashfaqul Alam",
+    "designation": "Founder of WatchTower Studios, Member of Shrapnel Method",
+    "review": "JJ made working fun from day one. Things just flowed from our first note and couldn’t be happier with the outcome. You can tell he truly cares about everything he does in the studio, and outside. This makes me work repeatedly with this dude. Godspeed! .",
+    "image": "/images/ashfaq.jpg"
   }
 ]

@@ -2,19 +2,23 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaFacebookF, FaInstagram, FaSpotify, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaSpotify, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  { label: "Work", href: "#work" },
+
   { label: "Services", href: "#services" },
+  { label: "Productions", href: "#productions" },
+  { label: "Reviews", href: "#reviews" },
+
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com", icon: FaFacebookF },
-  { label: "Instagram", href: "https://instagram.com", icon: FaInstagram },
-  { label: "TikTok", href: "https://tiktok.com", icon: FaTiktok },
-  { label: "Spotify", href: "https://spotify.com", icon: FaSpotify },
+  { label: "Facebook", href: "https://www.facebook.com/jagot.jit.7", icon: FaFacebookF },
+  { label: "Instagram", href: "https://www.instagram.com/jagot_jit_/", icon: FaInstagram },
+  { label: "WhatsApp", href: "https://wa.me/8801761629696", icon: FaWhatsapp },
+  { label: "Spotify", href: "https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1", icon: FaSpotify },
+  { label: "Email", href: "mailto:jagotjitsaha@gmail.com?subject=Booking Inquiry", icon: FaEnvelope },
 ];
 
 const Header = () => {

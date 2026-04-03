@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "./Components/Shared/Header";
+import SocialSidebar from "./Components/Shared/SocialSidebar";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
 
         <MusicProvider>
           <Header />
+          <SocialSidebar />
             <div className="relative z-10 transition-opacity duration-700">
                {children}
             </div>
