@@ -4,37 +4,27 @@ export default function AboutSection() {
   return (
     <section className="bg-[#c29226]/70 py-20">
       <div className="w-9/12 mx-auto flex flex-col md:flex-row items-center md:space-x-12">
-        
-        {/* Image Collage */}
+
+        {/* Image Collage - 2 staggered images */}
         <div data-aos="fade-right" className="md:w-1/2 mb-10 md:mb-0 flex justify-center">
-          <div className="flex space-x-4">
-            
-            {/* Left single centered image */}
-            <div className="flex items-center">
+          <div className="relative w-full max-w-[280px] md:max-w-[420px] h-[350px] md:h-[500px]">
+            {/* Top Image (Shifted Left) */}
+            <div className="absolute top-0 left-0 w-[100%] h-[60%] z-10 -translate-x-8 md:-translate-x-16 transition-transform duration-500 hover:scale-105 hover:z-20">
               <Image
                 src="/images/keyboard.jpg"
                 alt="Jagot Jit working in studio"
-                width={384}
-                height={384}
-                className="rounded-md shadow-lg w-40 md:w-96 md:h-auto h-96 object-cover"
+                fill
+                className="rounded-xl shadow-2xl object-cover border-4 border-[#deee4d]/10"
               />
             </div>
 
-            {/* Right two stacked images */}
-            <div className="flex flex-col space-y-4">
-              <Image
-                src="/images/drum.jpg"
-                alt="Music production studio"
-                width={240}
-                height={288}
-                className="rounded-md shadow-lg w-40 md:w-60 h-64 md:h-72 object-cover"
-              />
+            {/* Bottom Image (Shifted Right) */}
+            <div className="absolute bottom-0 right-0 w-[100%] h-[60%] z-0 translate-x-8 md:translate-x-16 transition-transform duration-500 hover:scale-105 hover:z-20">
               <Image
                 src="/images/studio.jpg"
-                alt="Jagot Jit performing"
-                width={240}
-                height={240}
-                className="rounded-md shadow-lg w-40 md:w-60 h-60 object-cover"
+                alt="Music production studio"
+                fill
+                className="rounded-xl shadow-2xl object-cover border-4 border-[#deee4d]/10"
               />
             </div>
           </div>
@@ -53,9 +43,9 @@ export default function AboutSection() {
             Introducing Jagot Jit
           </h2>
 
-         <p className="text-lg leading-relaxed text-white/80">
-  Jagot Jit  is a sound engineer and music producer who works with artists and bands on recording, mixing, and music production. He also performs as a musician, playing drums for Nivaniya and keyboard for Conclusion, while collaborating with different artists as a session keyboardist.
-</p>
+          <p className="text-lg leading-relaxed text-white/80">
+            Jagot Jit  is a sound engineer and music producer who works with artists and bands on recording, mixing, and music production. He also performs as a musician, playing drums for Nivaniya and keyboard for Conclusion, while collaborating with different artists as a session keyboardist.
+          </p>
 
           {/* Roles */}
           <ul className="space-y-2 text-md">

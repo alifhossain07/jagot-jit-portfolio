@@ -46,7 +46,7 @@ const Header = () => {
       }`}
     >
       {/* Inner wrapper */}
-      <div className="flex w-full max-w-[1200px] items-center justify-between gap-7">
+      <div className="flex w-full max-w-[1400px] items-center justify-between gap-7">
         {/* Left nav links – hidden on mobile */}
         <nav className="hidden md:flex flex-1 items-center gap-[18px]" aria-label="Primary">
           {navLinks.map((item) => (

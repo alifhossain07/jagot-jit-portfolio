@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import reviews from "@/data/reviews.json";
 
 const Hero = () => {
   return (
@@ -80,9 +81,21 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom Decorative Element: Coordinates or Technical Specs vibe */}
-      <div className="absolute bottom-10 left-10 hidden text-[10px] font-mono uppercase tracking-[0.4em] text-sand/30 lg:block">
-        Frequency Response: 20Hz - 20kHz // 48kHz 24-bit
+      {/* Bottom Marquee: Reviews */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/5 bg-midnight/50 backdrop-blur-sm py-3">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...reviews, ...reviews].map((rev, idx) => (
+            <div key={`${rev.id}-${idx}`} className="flex items-center mx-12">
+              <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-white italic">
+                &ldquo;{rev.review.slice(0, 100)}...&rdquo;
+              </span>
+              <span className="ml-4 text-[10px] font-mono uppercase tracking-[0.4em] text-yellow-500">
+                &mdash; {rev.name}
+              </span>
+              <div className="ml-12 h-1 w-1 rounded-full bg-orange/20" />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
