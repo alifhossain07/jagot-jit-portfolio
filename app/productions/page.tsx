@@ -18,12 +18,12 @@ export default function ProductionsPage() {
   const { currentTrack, isPlaying, playTrack } = useMusic();
 
   return (
-    <main className="py-32 px-6 min-h-screen relative overflow-hidden">
+    <main className="py-10 lg:py-24 px-6 min-h-screen relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c29226]/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#deee4d]/5 blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-5xl 2xl:max-w-7xl mx-auto relative z-10">
         <div className="mb-20">
           <Link 
             href="/" 
@@ -51,8 +51,8 @@ export default function ProductionsPage() {
           </div>
         </div>
 
-        {/* Grid for all 35 tracks */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Grid for all 35 tracks - 2 columns on mobile */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
           {musicData.tracks.map((track, idx) => {
             const isCurrent = currentTrack?.id === track.id;
             const isThisPlaying = isCurrent && isPlaying;
@@ -64,13 +64,13 @@ export default function ProductionsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.02 }}
                 className={cn(
-                  "group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden transition-all duration-500",
+                  "group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[1.2rem] md:rounded-[2rem] overflow-hidden transition-all duration-500",
                   "hover:border-[#c29226]/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)]",
                   isThisPlaying && "border-[#deee4d]/40 ring-1 ring-[#deee4d]/20"
                 )}
               >
                 {/* Image Area */}
-                <div className="relative aspect-square overflow-hidden m-3 rounded-[1.5rem]">
+                <div className="relative aspect-square overflow-hidden m-1.5 md:m-3 rounded-[1rem] md:rounded-[1.5rem]">
                   <Image
                     src={track.image}
                     alt={track.title}
@@ -81,12 +81,12 @@ export default function ProductionsPage() {
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                     <button
                       onClick={() => playTrack(track as Track)}
-                      className="w-14 h-14 bg-[#c29226] text-white rounded-full flex items-center justify-center scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl hover:bg-[#deee4d] hover:text-black hover:scale-110 active:scale-90"
+                      className="w-10 h-10 md:w-14 md:h-14 bg-[#c29226] text-white rounded-full flex items-center justify-center scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl hover:bg-[#deee4d] hover:text-black hover:scale-110 active:scale-90"
                     >
                       {isThisPlaying ? (
-                        <Pause size={24} fill="currentColor" />
+                        <Pause className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
                       ) : (
-                        <Play size={24} fill="currentColor" className="ml-1" />
+                        <Play className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" />
                       )}
                     </button>
                   </div>
@@ -101,29 +101,29 @@ export default function ProductionsPage() {
                 </div>
 
                 {/* Meta Area */}
-                <div className="px-6 pb-6 pt-1">
-                   <div className="flex justify-between items-start gap-3 mb-1">
-                    <h3 className="font-geist-mono font-light text-xl text-white truncate group-hover:text-[#deee4d] transition-colors tracking-tighter">
+                <div className="px-3 pb-3 md:px-6 md:pb-6 pt-0 md:pt-1">
+                   <div className="flex justify-between items-start gap-2 md:gap-3 mb-0.5 md:mb-1">
+                    <h3 className="font-geist-mono font-light text-sm md:text-xl text-white truncate group-hover:text-[#deee4d] transition-colors tracking-tighter">
                       {track.title}
                     </h3>
                   </div>
                   
-                  <p className="text-white/40 font-space-grotesk text-xs mb-4 flex items-center gap-2">
+                  <p className="text-white/40 font-space-grotesk text-[9px] md:text-xs mb-2 md:mb-4 flex items-center gap-1.5 md:gap-2">
                     <span className="w-1 h-1 bg-[#c29226] rounded-full" />
                     {track.artists.join(', ')}
                   </p>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-2 md:pt-4 border-t border-white/5">
                     <a 
                       href={track.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] text-[#deee4d]/60 hover:text-[#deee4d] transition-colors"
+                      className="flex items-center gap-1.5 md:gap-2 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-[#deee4d]/60 hover:text-[#deee4d] transition-colors"
                     >
-                      <ExternalLink size={12} />
-                      <span>Open in Spotify</span>
+                      <ExternalLink className="w-2.5 h-2.5 md:w-3 md:h-3" />
+                      <span className="truncate max-w-[60px] md:max-w-none">Spotify</span>
                     </a>
-                    <span className="text-[10px] font-mono text-white/20">
+                    <span className="text-[8px] md:text-[10px] font-mono text-white/20 whitespace-nowrap">
                       {track.duration}
                     </span>
                   </div>

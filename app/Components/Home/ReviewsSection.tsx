@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import reviews from '@/data/reviews.json';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 const ReviewsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +25,7 @@ const ReviewsSection = () => {
   };
 
   return (
-    <section className="py-24 px-6 relative overflow-hidden bg-midnight" id="reviews">
+    <section className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden bg-midnight" id="reviews">
       {/* Parallax Background */}
       <div 
         className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
@@ -28,8 +34,8 @@ const ReviewsSection = () => {
       {/* Deep Midnight Tint Overlay */}
       <div className="absolute inset-0 z-10 bg-[#0e1327]/40 backdrop-blur-[1px]" />
 
-      <div className="max-w-7xl mx-auto relative z-20">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
+      <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6 md:gap-8">
           <div className="flex flex-col items-start space-y-3">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -38,7 +44,7 @@ const ReviewsSection = () => {
               className="flex items-center gap-3"
             >
               <div className="h-[1px] w-8 bg-[#c29226]" />
-              <span className="text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
+              <span className="text-[0.6rem] md:text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
                 Testimonials
               </span>
             </motion.div>
@@ -48,38 +54,42 @@ const ReviewsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-light tracking-tighter text-white font-geist-mono"
+              className="text-3xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white font-geist-mono"
             >
               Client <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-1">Reviews</span>
             </motion.h2>
           </div>
 
           {isCarousel && (
-            <div className="flex gap-3 mb-2">
+            <div className="flex gap-2 md:gap-3 mb-2 self-start md:self-auto">
               <button 
                 onClick={prevSlide}
-                className="p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
+                className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
               </button>
               <button 
                 onClick={nextSlide}
-                className="p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
+                className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
               >
-                <ChevronRight size={20} />
+                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
           )}
         </div>
 
         {isCarousel ? (
-          /* Carousel Layout */
           <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
             <motion.div 
-              className="flex gap-6"
               animate={{ x: `-${currentIndex * (100 / reviews.length)}%` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{ width: `${reviews.length * (100 / 3)}%` }}
+              style={{ 
+                width: `${reviews.length * 100}%`, // 1 per row on mobile
+              }}
+              className={cn(
+                "flex gap-6",
+                "md:!w-[calc(10 * 33.333%)]" // Desktop width override
+              )}
             >
               {reviews.map((rev, idx) => (
                 <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={true} />
@@ -87,8 +97,8 @@ const ReviewsSection = () => {
             </motion.div>
           </div>
         ) : (
-          /* Grid Layout (if ≤ 3) */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          /* Grid Layout (if ≤ 3) - 1 column on mobile */
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {reviews.map((rev, idx) => (
               <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={false} />
             ))}
@@ -139,14 +149,15 @@ const ReviewCard = ({ rev, idx, isCarousel }: ReviewCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: idx * 0.05 }}
-      className={`group relative ${isCarousel ? 'w-full md:w-[380px] flex-shrink-0' : ''}`}
+      className={`group relative ${isCarousel ? 'w-[calc(100%/var(--items))] md:w-[300px] lg:w-[340px] xl:w-[380px] flex-shrink-0' : ''}`}
+      style={{ '--items': reviews.length } as React.CSSProperties}
     >
-      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-6 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative">
+      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative">
         
-        <Quote className="text-[#deee4d]/20 mb-4 group-hover:text-[#deee4d]/40 transition-colors" size={32} />
+        <Quote className="text-[#deee4d]/20 mb-4 group-hover:text-[#deee4d]/40 transition-colors shrink-0 w-8 h-8" />
 
         <div className="relative w-full">
-          <p className="text-white/60 font-space-grotesk text-xs leading-relaxed mb-8 italic group-hover:text-white/80 transition-colors line-clamp-2">
+          <p className="text-white/60 font-space-grotesk text-xs leading-relaxed mb-6 md:mb-8 italic group-hover:text-white/80 transition-colors line-clamp-3">
             &ldquo;{rev.review}&rdquo;
           </p>
         </div>

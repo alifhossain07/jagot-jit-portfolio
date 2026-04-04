@@ -31,26 +31,26 @@ const MusicSection = () => {
   };
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden" id="productions">
+    <section className="py-9  px-6 relative overflow-hidden" id="productions">
       {/* Background Decorative Elements to match Hero */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#c29226]/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#deee4d]/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative z-10 mt-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div className="space-y-4">
+      <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-10 mt-8 lg:mt-12">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-10 lg:mb-16 gap-8">
+          <div className="space-y-3 lg:space-y-4">
             <div className="flex items-center gap-3">
-              <span className="text-[0.7rem] font-bold uppercase tracking-[0.6em] text-[#deee4d]/60">
+              <span className="text-[0.65rem] lg:text-[0.7rem] font-bold uppercase tracking-[0.6em] text-[#deee4d]/60">
                 Latest Works
               </span>
-              <div className="h-[1px] w-12 bg-[#c29226]" />
+              <div className="h-[1px] w-10 lg:w-12 bg-[#c29226]" />
             </div>
             
-            <h2 className="text-5xl md:text-7xl font-light tracking-tighter text-white font-geist-mono">
+            <h2 className="text-3xl xl:text-5xl 2xl:text-6xl font-light tracking-tighter text-white font-geist-mono">
               MY <span className="text-[#c29226] italic font-bulgatti block md:inline">Productions</span>
             </h2>
             
-            <p className="text-white/40 max-w-md text-lg leading-relaxed font-space-grotesk">
+            <p className="text-white/40 max-w-sm lg:max-w-md text-base lg:text-lg leading-relaxed font-space-grotesk">
               A curated selection of sound engineering and music production projects.
             </p>
           </div>
@@ -81,13 +81,19 @@ const MusicSection = () => {
           </div>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
+        <div className="relative overflow-hidden cursor-grab active:cursor-grabbing pb-8">
           <motion.div 
-            className="flex gap-8"
-            animate={{ x: `-${currentIndex * (100 / displayTracks.length)}%` }}
+            animate={{ 
+              x: `-${currentIndex * (100 / displayTracks.length)}%` 
+            }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            style={{ width: `${displayTracks.length * 30}%` }}
+            style={{ 
+              width: `calc(${displayTracks.length} * 70vw)`, // Each card is 70% screen width (gives approx 1.4 cards visible)
+            }}
+            className={cn(
+              "flex gap-3 md:gap-8", 
+              "sm:!w-[300%]" // Desktop width override
+            )}
           >
             {displayTracks.map((track, idx) => {
               const isCurrent = currentTrack?.id === track.id;
@@ -96,19 +102,19 @@ const MusicSection = () => {
               return (
                 <motion.div 
                   key={track.id}
-                  className="w-full md:w-[320px] flex-shrink-0"
+                  className="w-[calc(100%/10)] sm:w-[280px] lg:w-[300px] xl:w-[320px] flex-shrink-0"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
                 >
                   <div className={cn(
-                    "group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden transition-all duration-500",
+                    "group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-500",
                     "hover:border-[#c29226]/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)]",
                     isThisPlaying && "border-[#deee4d]/40 ring-1 ring-[#deee4d]/20"
                   )}>
                     {/* Image Area */}
-                    <div className="relative aspect-square overflow-hidden m-3 rounded-[1.5rem]">
+                    <div className="relative aspect-[4/3] md:aspect-square overflow-hidden m-2 md:m-3 rounded-[1.2rem] md:rounded-[1.5rem]">
                       <Image
                         src={track.image}
                         alt={track.title}
@@ -142,14 +148,14 @@ const MusicSection = () => {
                     </div>
 
                     {/* Meta Area */}
-                    <div className="px-6 pb-6 pt-1">
+                    <div className="px-4 pb-4 lg:px-6 lg:pb-6 pt-0">
                        <div className="flex justify-between items-start gap-3 mb-1">
-                        <h3 className="font-geist-mono font-light text-xl text-white truncate group-hover:text-[#deee4d] transition-colors tracking-tighter">
+                        <h3 className="font-geist-mono font-light text-lg lg:text-xl text-white truncate group-hover:text-[#deee4d] transition-colors tracking-tighter">
                           {track.title}
                         </h3>
                       </div>
                       
-                      <p className="text-white/40 font-space-grotesk text-xs mb-4 flex items-center gap-2">
+                      <p className="text-white/40 font-space-grotesk text-[10px] lg:text-xs mb-3 lg:mb-4 flex items-center gap-2">
                         <span className="w-1 h-1 bg-[#c29226] rounded-full" />
                         {track.artists.join(', ')}
                       </p>

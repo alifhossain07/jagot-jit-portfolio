@@ -34,7 +34,7 @@ const services = [
 
 const Services = () => {
   return (
-    <section className="py-24 px-6 relative overflow-hidden" id="services">
+    <section className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden" id="services">
       {/* Parallax Background */}
       <div 
         className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
@@ -43,19 +43,19 @@ const Services = () => {
       {/* Deep Midnight Tint Overlay */}
       <div className="absolute inset-0 z-10 bg-[#0e1327]/40 backdrop-blur-[1px]" />
 
-      <div className="max-w-7xl mx-auto relative z-20">
-        <div className="flex flex-col items-center text-center mb-16 space-y-6">
+      <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-20">
+        <div className="flex flex-col items-center text-center mb-10 lg:mb-16 space-y-4 lg:space-y-6">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="flex items-center gap-3 relative z-20"
           >
-            <div className="h-[1px] w-8 bg-[#c29226]" />
-            <span className="text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
+            <div className="h-[1px] w-6 lg:w-8 bg-[#c29226]" />
+            <span className="text-[0.6rem] lg:text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
               Services
             </span>
-            <div className="h-[1px] w-8 bg-[#c29226]" />
+            <div className="h-[1px] w-6 lg:w-8 bg-[#c29226]" />
           </motion.div>
           
           <motion.h2 
@@ -63,13 +63,13 @@ const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-light tracking-tighter text-white font-geist-mono relative z-10 leading-[1.4]"
+            className="text-3xl lg:text-4xl xl:text-5xl font-light tracking-tighter text-white font-geist-mono relative z-10 leading-[1.2]"
           >
-            My <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-2">Specialties</span>
+            My <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-1">Specialties</span>
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
           {services.map((service, idx) => (
             <motion.div
               key={service.title}
@@ -79,14 +79,14 @@ const Services = () => {
               transition={{ delay: idx * 0.05 }}
               className="group"
             >
-              <div className="relative h-full bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-3xl p-6 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <div className="relative h-full bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-xl lg:rounded-3xl p-3.5 lg:p-6 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 {/* Minimal Icon Area */}
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover:scale-110 shadow-lg"
+                  className="w-8 h-8 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl flex items-center justify-center mb-2.5 lg:mb-4 transition-all duration-500 group-hover:scale-110 shadow-lg"
                   style={{ backgroundColor: `${service.color}20`, border: `1px solid ${service.color}40` }}
                 >
                   <service.icon 
-                    size={22} 
+                    size={16} 
                     style={{ color: service.color }} 
                     className="group-hover:opacity-100 transition-opacity"
                   />
@@ -94,13 +94,13 @@ const Services = () => {
 
                 {/* Content */}
                 <h3 
-                  className="text-xl font-geist-mono font-medium mb-2 transition-colors"
+                  className="text-sm lg:text-xl font-geist-mono font-medium mb-1 lg:mb-2 transition-colors uppercase tracking-wider"
                   style={{ color: service.color }} 
                 >
                   {service.title}
                 </h3>
                 
-                <p className="text-white/60 font-space-grotesk text-xs leading-relaxed group-hover:text-white/90 transition-colors">
+                <p className="text-white/60 font-space-grotesk text-[9px] lg:text-xs leading-relaxed group-hover:text-white/90 transition-colors">
                   {service.description}
                 </p>
                 
@@ -119,11 +119,11 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-16 flex justify-center"
+          className="mt-12 lg:mt-16 flex justify-center"
         >
           <Link
             href="#booking"
-            className="group relative inline-flex items-center justify-center rounded-full border border-ice/20 px-10 py-4 text-xs font-bold uppercase tracking-[0.3em] text-ice shadow-[0_0_15px_rgba(239,252,253,0.1)] transition-all duration-500 bg-[#747a3e] hover:bg-[#c29226] hover:text-midnight hover:scale-105 active:scale-95"
+            className="group relative inline-flex items-center justify-center rounded-full border border-ice/20 px-8 lg:px-10 py-3 lg:py-4 text-[10px] lg:text-xs font-bold uppercase tracking-[0.3em] text-ice shadow-[0_0_15px_rgba(239,252,253,0.1)] transition-all duration-500 bg-[#747a3e] hover:bg-[#c29226] hover:text-midnight hover:scale-105 active:scale-95"
           >
             Book a Session
           </Link>

@@ -3,6 +3,12 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 const socialLinks = [
   {
@@ -37,7 +43,12 @@ const SocialSidebar = () => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1, duration: 0.8 }}
-      className="fixed right-6 top-[35%] -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4 p-3 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+      className={cn(
+        "fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5 transition-all duration-500",
+        "p-1.5 gap-2",                 // Mobile base
+        "lg:p-2.5 lg:gap-3",          // lg to xl (reduced)
+        "2xl:p-3 2xl:gap-4"           // For 2xl
+      )}
     >
       {socialLinks.map((social) => (
         <motion.a
@@ -46,10 +57,22 @@ const SocialSidebar = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.2, x: -5 }}
-          className={`text-ice transition-colors duration-300 p-3 rounded-full hover:bg-white/10 ${social.color}`}
+          className={cn(
+            "text-ice duration-300 rounded-full hover:bg-white/10 flex items-center justify-center transition-all",
+            "w-7 h-7 md:w-8 md:h-8",    // Mobile sizes
+            "lg:w-9 lg:h-9",             // lg sizes
+            "2xl:w-11 2xl:h-11",         // 2xl sizes
+            social.color
+          )}
           aria-label={social.label}
         >
-          <social.icon size={20} />
+          <social.icon 
+            className={cn(
+              "w-3.5 h-3.5",            // Mobile
+              "lg:w-4 lg:h-4",           // lg to xl
+              "2xl:w-5 2xl:h-5"          // 2xl
+            )}
+          />
         </motion.a>
       ))}
     </motion.div>

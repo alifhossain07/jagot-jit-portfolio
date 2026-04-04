@@ -5,12 +5,10 @@ import { useEffect, useState } from "react";
 import { FaFacebookF, FaInstagram, FaSpotify, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-
-  { label: "Services", href: "#services" },
-  { label: "Productions", href: "#productions" },
-  { label: "Reviews", href: "#reviews" },
-
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/#services" },
+  { label: "Productions", href: "/#productions" },
+  { label: "Reviews", href: "/#reviews" },
 ];
 
 const socialLinks = [
@@ -43,33 +41,33 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 flex h-[70px] items-center justify-center shadow-xl border-b border-transparent px-5 md:px-10 transition-all duration-300 ease-in-out ${
+      className={`fixed inset-x-0 top-0 z-50 flex h-[60px] lg:h-[65px] xl:h-[70px] items-center justify-center shadow-xl border-b border-white/5 px-5 md:px-10 transition-all duration-300 ease-in-out ${
         isScrolled
-          ? "bg-[#747a3e] border-tan shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
-          : "bg-transparent"
+          ? "bg-[#747a3e] lg:border-tan lg:shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+          : "bg-[#747a3e] lg:bg-transparent lg:border-transparent lg:shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
       }`}
     >
       {/* Inner wrapper */}
-      <div className="flex w-full max-w-[1400px] items-center justify-between gap-7">
+      <div className="flex w-full lg:w-10/12 items-center justify-between gap-7">
         {/* Left nav links – hidden on mobile */}
-        <nav className="hidden md:flex flex-1 items-center gap-[18px]" aria-label="Primary">
+        <nav className="hidden md:flex flex-1 items-center gap-3 lg:gap-4 xl:gap-[18px]" aria-label="Primary">
           {navLinks.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               onClick={handleNavClick}
-              className="font-space-grotesk uppercase tracking-[0.15em] text-ice text-[0.85rem] transition-all duration-300 hover:text-sand hover:-translate-y-px"
+              className="font-space-grotesk uppercase tracking-[0.12em] lg:tracking-[0.15em] text-ice text-[0.75rem] lg:text-[0.8rem] xl:text-[0.85rem] transition-all duration-300 hover:text-sand hover:-translate-y-px whitespace-nowrap"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* Center logo */}
+        {/* Center logo - stick to left on mobile */}
         <Link
-          href="#home"
+          href="/"
           onClick={handleNavClick}
-          className="font-space-grotesk text-[1.2rem] font-semibold uppercase tracking-[0.25em] text-ice transition-all duration-300 hover:text-sand hover:scale-105 mx-auto md:mx-0"
+          className="font-space-grotesk text-lg lg:text-[1.1rem] xl:text-[1.2rem] font-semibold uppercase tracking-[0.2em] lg:tracking-[0.25em] text-ice transition-all duration-300 hover:text-sand hover:scale-105 md:mx-0 whitespace-nowrap"
         >
           Jagot Jit 
         </Link>

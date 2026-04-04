@@ -4,19 +4,28 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Quote } from 'lucide-react';
 import Image from 'next/image';
-import reviews from '@/data/reviews.json';
+import reviewsData from '@/data/reviews.json';
+
+interface Review {
+  id: string;
+  name: string;
+  review: string;
+  image: string;
+  designation: string;
+}
 
 const ReviewPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [randomReview, setRandomReview] = useState<any>(null);
+  const [randomReview, setRandomReview] = useState<Review | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
     const showNextReview = () => {
       // Pick a random review
-      const randomIndex = Math.floor(Math.random() * reviews.length);
-      setRandomReview(reviews[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * reviewsData.length);
+      setRandomReview(reviewsData[randomIndex] as Review);
       setIsVisible(true);
 
       // Auto-close after 10 seconds
@@ -33,79 +42,130 @@ const ReviewPopup = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsVisible(false);
-    // The cycle will continue naturally after the next 10s hide period
+  };
+
+  const handleCardClick = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setIsExpanded(true);
+    }
   };
 
   if (!randomReview) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, x: 100, y: 0, scale: 0.9 }}
-          animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-          exit={{ opacity: 0, x: 100, scale: 0.9 }}
-          transition={{ type: 'spring', damping: 20, stiffness: 100 }}
-          className="fixed bottom-24 right-6 z-[60] w-[320px] max-w-[calc(100vw-3rem)]"
-        >
-          <div className="relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group">
-            {/* Close Button */}
-            <button
-              onClick={handleClose}
-              className="absolute top-4 right-4 p-1 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all z-10"
+    <>
+      <AnimatePresence>
+        {isVisible && !isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, x: 100, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 100, scale: 0.9 }}
+            transition={{ type: 'spring', damping: 20, stiffness: 100 }}
+            className="fixed bottom-6 right-6 md:bottom-24 md:right-8 z-[60] w-[260px] md:w-[320px] max-w-[calc(100vw-2rem)]"
+          >
+            <div 
+              onClick={handleCardClick}
+              className={`relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group transition-all duration-300 md:cursor-default ${typeof window !== 'undefined' && window.innerWidth < 768 ? 'cursor-pointer active:scale-95' : ''}`}
             >
-              <X size={14} />
-            </button>
+              {/* Close Button */}
+              <button
+                onClick={handleClose}
+                className="absolute top-4 right-4 p-1 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all z-10"
+              >
+                <X size={14} />
+              </button>
 
-            {/* Decorative Accent */}
-            <div className="absolute -top-10 -left-10 w-24 h-24 bg-[#c29226]/20 blur-3xl rounded-full" />
+              {/* Decorative Accent */}
+              <div className="absolute -top-10 -left-10 w-24 h-24 bg-[#c29226]/20 blur-3xl rounded-full" />
 
-            <div className="relative space-y-4">
-              <div className="flex items-center gap-2">
-                <Quote size={16} className="text-[#deee4d]" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#deee4d]/60">
-                  Client Love
-                </span>
+              <div className="relative space-y-2 md:space-y-4">
+                <div className="flex items-center gap-2">
+                  <Quote size={14} className="text-[#deee4d] md:w-4 md:h-4" />
+                  <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-[#deee4d]/60">
+                    Client Love
+                  </span>
+                </div>
+
+                <p className="text-white/80 text-[10px] md:text-xs leading-relaxed font-space-grotesk italic line-clamp-2 md:line-clamp-none">
+                  &ldquo;{randomReview.review.slice(0, 60)}{randomReview.review.length > 60 ? '...' : ''}&rdquo;
+                </p>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10">
+                    <Image
+                      src={randomReview.image}
+                      alt={randomReview.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-white font-geist-mono text-[11px] font-medium leading-tight">
+                      {randomReview.name}
+                    </span>
+                    <span className="text-white/40 text-[9px] uppercase tracking-wider mt-0.5">
+                      {randomReview.designation.split(',')[0]}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <p className="text-white/80 text-xs leading-relaxed font-space-grotesk italic">
-                &ldquo;{randomReview.review.slice(0, 120)}{randomReview.review.length > 120 ? '...' : ''}&rdquo;
+              {/* Progress bar timer (visual only) */}
+              <motion.div 
+                key={randomReview.id}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 10, ease: "linear" }}
+                className="absolute bottom-0 left-0 h-1 bg-[#c29226]/50 w-full origin-left"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* EXPANDED MODAL (For mobile only) */}
+      <AnimatePresence>
+        {isExpanded && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md lg:hidden">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-sm bg-[#525333] border border-white/20 rounded-[2.5rem] p-8 shadow-2xl space-y-6"
+            >
+              <button
+                onClick={() => setIsExpanded(false)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center gap-3">
+                <Quote size={24} className="text-[#deee4d]" />
+                <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#deee4d]">Full Review</span>
+              </div>
+
+              <p className="text-white/90 text-sm leading-relaxed font-space-grotesk italic">
+                &ldquo;{randomReview.review}&rdquo;
               </p>
 
-              <div className="flex items-center gap-3 pt-2">
-                <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/10">
-                  <Image
-                    src={randomReview.image}
-                    alt={randomReview.name}
-                    fill
-                    className="object-cover"
-                  />
+              <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-white/10">
+                  <Image src={randomReview.image} alt={randomReview.name} fill className="object-cover" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-white font-geist-mono text-[11px] font-medium leading-tight">
-                    {randomReview.name}
-                  </span>
-                  <span className="text-white/40 text-[9px] uppercase tracking-wider mt-0.5">
-                    {randomReview.designation.split(',')[0]}
-                  </span>
+                <div>
+                  <h4 className="text-white font-geist-mono text-base font-medium">{randomReview.name}</h4>
+                  <p className="text-[#deee4d]/60 text-xs uppercase tracking-wider">{randomReview.designation}</p>
                 </div>
               </div>
-            </div>
-
-            {/* Progress bar timer (visual only) */}
-            <motion.div 
-              key={randomReview.id} // Re-trigger animation when review changes
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 10, ease: "linear" }}
-              className="absolute bottom-0 left-0 h-1 bg-[#c29226]/50 w-full origin-left"
-            />
+            </motion.div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
