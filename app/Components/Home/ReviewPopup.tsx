@@ -14,6 +14,8 @@ interface Review {
   designation: string;
 }
 
+import ReviewModal from './ReviewModal';
+
 const ReviewPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [randomReview, setRandomReview] = useState<Review | null>(null);
@@ -48,9 +50,7 @@ const ReviewPopup = () => {
   };
 
   const handleCardClick = () => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      setIsExpanded(true);
-    }
+    setIsExpanded(true);
   };
 
   if (!randomReview) return null;
@@ -68,7 +68,7 @@ const ReviewPopup = () => {
           >
             <div 
               onClick={handleCardClick}
-              className={`relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group transition-all duration-300 md:cursor-default ${typeof window !== 'undefined' && window.innerWidth < 768 ? 'cursor-pointer active:scale-95' : ''}`}
+              className="relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group transition-all duration-300 cursor-pointer active:scale-95"
             >
               {/* Close Button */}
               <button
@@ -126,45 +126,11 @@ const ReviewPopup = () => {
         )}
       </AnimatePresence>
 
-      {/* EXPANDED MODAL (For mobile only) */}
-      <AnimatePresence>
-        {isExpanded && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md lg:hidden">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-sm bg-[#525333] border border-white/20 rounded-[2.5rem] p-8 shadow-2xl space-y-6"
-            >
-              <button
-                onClick={() => setIsExpanded(false)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white"
-              >
-                <X size={20} />
-              </button>
-
-              <div className="flex items-center gap-3">
-                <Quote size={24} className="text-[#deee4d]" />
-                <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#deee4d]">Full Review</span>
-              </div>
-
-              <p className="text-white/90 text-sm leading-relaxed font-space-grotesk italic">
-                &ldquo;{randomReview.review}&rdquo;
-              </p>
-
-              <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-white/10">
-                  <Image src={randomReview.image} alt={randomReview.name} fill className="object-cover" />
-                </div>
-                <div>
-                  <h4 className="text-white font-geist-mono text-base font-medium">{randomReview.name}</h4>
-                  <p className="text-[#deee4d]/60 text-xs uppercase tracking-wider">{randomReview.designation}</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <ReviewModal 
+        isOpen={isExpanded}
+        onClose={() => setIsExpanded(false)}
+        review={randomReview}
+      />
     </>
   );
 };

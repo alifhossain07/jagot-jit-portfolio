@@ -12,8 +12,12 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+import ReviewModal from './ReviewModal';
+
 const ReviewsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isCarousel = reviews.length >= 4;
 
   const nextSlide = () => {
@@ -24,9 +28,14 @@ const ReviewsSection = () => {
     setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
 
+  const handleExpand = (review: Review) => {
+    setSelectedReview(review);
+    setIsModalOpen(true);
+  };
+
   return (
     <section className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden bg-midnight" id="reviews">
-      {/* Parallax Background */}
+      {/* ... previous content ... */}
       <div 
         className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
         style={{ backgroundImage: "url('/images/parallax.jpg')" }}
@@ -92,7 +101,7 @@ const ReviewsSection = () => {
               )}
             >
               {reviews.map((rev, idx) => (
-                <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={true} />
+                <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={true} onExpand={() => handleExpand(rev)} />
               ))}
             </motion.div>
           </div>
@@ -100,7 +109,7 @@ const ReviewsSection = () => {
           /* Grid Layout (if ≤ 3) - 1 column on mobile */
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {reviews.map((rev, idx) => (
-              <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={false} />
+              <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={false} onExpand={() => handleExpand(rev)} />
             ))}
           </div>
         )}
@@ -122,6 +131,12 @@ const ReviewsSection = () => {
           </div>
         </motion.div>
       </div>
+
+      <ReviewModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        review={selectedReview}
+      />
     </section>
   );
 };
@@ -138,9 +153,10 @@ interface ReviewCardProps {
   rev: Review;
   idx: number;
   isCarousel: boolean;
+  onExpand: () => void;
 }
 
-const ReviewCard = ({ rev, idx, isCarousel }: ReviewCardProps) => {
+const ReviewCard = ({ rev, idx, isCarousel, onExpand }: ReviewCardProps) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
@@ -149,10 +165,11 @@ const ReviewCard = ({ rev, idx, isCarousel }: ReviewCardProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: idx * 0.05 }}
-      className={`group relative ${isCarousel ? 'w-[calc(100%/var(--items))] md:w-[300px] lg:w-[340px] xl:w-[380px] flex-shrink-0' : ''}`}
+      className={`group relative ${isCarousel ? 'w-[calc(100%/var(--items))] md:w-[300px] lg:w-[340px] xl:w-[380px] flex-shrink-0' : ''} cursor-pointer`}
       style={{ '--items': reviews.length } as React.CSSProperties}
+      onClick={onExpand}
     >
-      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative">
+      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative active:scale-[0.98]">
         
         <Quote className="text-[#deee4d]/20 mb-4 group-hover:text-[#deee4d]/40 transition-colors shrink-0 w-8 h-8" />
 
@@ -179,8 +196,14 @@ const ReviewCard = ({ rev, idx, isCarousel }: ReviewCardProps) => {
           </div>
           <div 
             className="min-w-0 flex-1 relative"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
+            onMouseEnter={(e) => {
+               e.stopPropagation();
+               setShowTooltip(true);
+            }}
+            onMouseLeave={(e) => {
+               e.stopPropagation();
+               setShowTooltip(false);
+            }}
           >
             <h4 className="text-white font-geist-mono font-medium text-base leading-tight group-hover:text-[#c29226] transition-colors truncate">
               {rev.name}

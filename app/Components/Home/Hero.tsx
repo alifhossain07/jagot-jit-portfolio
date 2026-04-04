@@ -4,7 +4,7 @@ import React from 'react';
 import Image from "next/image";
 import Link from "next/link";
 
-import { motion } from 'framer-motion';
+
 
 
 const Hero = () => {
@@ -40,29 +40,9 @@ const Hero = () => {
             <div className="absolute bottom-6 left-6 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-xl" />
             <div className="absolute bottom-6 right-6 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-xl" />
 
-            <div className="absolute top-8 left-8 flex flex-col gap-1 font-mono text-[6px] sm:text-[8px] uppercase tracking-widest text-white/40">
-              <div className="flex items-center gap-2">
-                <motion.div 
-                  animate={{ opacity: [1, 0, 1] }} 
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-red-500" 
-                />
-                <span className="text-white/80">REC // LIVE</span>
-              </div>
-              <span>FPS: 60.00</span>
-              <span>ISO: 400</span>
-            </div>
+           
 
-            <div className="absolute bottom-10 left-10 right-10 flex justify-between items-center font-mono text-[6px] sm:text-[8px] uppercase tracking-widest text-white/40">
-              <div className="flex flex-col gap-1">
-                <span>LEVEL: -6.4 dB</span>
-                <span>FREQ: 48kHz</span>
-              </div>
-              <div className="text-right flex flex-col gap-1">
-                <span>REF: JJ-STUDIO-A</span>
-                <span>SYNC: GLOBAL</span>
-              </div>
-            </div>
+            
           </div>
         </div>
 
@@ -95,7 +75,7 @@ const Hero = () => {
               href="#productions"
               className="group relative inline-flex min-h-[36px] sm:min-h-[44px] items-center justify-center overflow-hidden px-4 sm:px-8 py-2 sm:py-3 text-[9px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] leading-none text-ice flex-1 sm:flex-none whitespace-nowrap"
             >
-              <span>Work</span>
+              <span>Explore Work</span>
               <span className="absolute bottom-0 left-0 h-[1px] w-full bg-[#c29226] transition-all duration-300 group-hover:h-[2px] group-hover:bg-orange" />
             </Link>
 
@@ -103,7 +83,7 @@ const Hero = () => {
               href="#booking"
               className="rounded-full border border-ice/20 px-4 sm:px-10 py-2 sm:py-3 text-[9px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-ice shadow-[0_0_15px_rgba(239,252,253,0.1)] transition-all duration-500 hover:bg-ice hover:text-midnight flex-1 sm:flex-none whitespace-nowrap text-center"
             >
-              Book
+              Book a Session
             </Link>
           </div>
         </div>

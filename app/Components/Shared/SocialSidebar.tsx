@@ -44,7 +44,7 @@ const SocialSidebar = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1, duration: 0.8 }}
       className={cn(
-        "fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5 transition-all duration-500",
+        "fixed right-3 md:right-6 top-1/2 lg:top-[40%] -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5 transition-all duration-500",
         "p-1.5 gap-2",                 // Mobile base
         "lg:p-2.5 lg:gap-3",          // lg to xl (reduced)
         "2xl:p-3 2xl:gap-4"           // For 2xl
