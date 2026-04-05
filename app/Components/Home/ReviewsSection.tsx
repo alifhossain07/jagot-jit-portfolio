@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import reviews from '@/data/reviews.json';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import reviewsData from '@/data/reviews.json';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { clsx, type ClassValue } from 'clsx';
@@ -14,18 +13,162 @@ function cn(...inputs: ClassValue[]) {
 
 import ReviewModal from './ReviewModal';
 
+interface Review {
+  id: string;
+  name: string;
+  designation: string;
+  review: string;
+  image?: string;
+}
+
 const ReviewsSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isCarousel = reviews.length >= 4;
+  
+  // Carousel State
+  const [offset, setOffset] = useState(0); // Offset in percentage (0 to 100)
+  const [isDragging, setIsDragging] = useState(false);
+  const [isPointerDown, setIsPointerDown] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0); // In pixels
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentGap, setCurrentGap] = useState(24);
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const requestRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
+
+  // Configuration
+  const SCROLL_SPEED = 0.040; // Percentage per frame (~1% every 66 frames)
+  const reviews = reviewsData as Review[];
+  const extendedReviews = [...reviews, ...reviews, ...reviews]; // 3x for infinite feel
+  const totalReviews = reviews.length;
+  
+  // Responsive visible items
+  const [visibleItems, setVisibleItems] = useState(3);
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      if (width < 768) {
+        setVisibleItems(1);
+        setCurrentGap(16); // gap-4 
+      } else if (width < 1024) {
+        setVisibleItems(2);
+        setCurrentGap(24); // gap-6
+      } else {
+        setVisibleItems(3);
+        setCurrentGap(24); // gap-6
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const itemWidthPercent = 100 / visibleItems;
+  const loopLimit = 100; // Reset at 100% (end of the first reviews set)
+
+  // Animation Loop
+  const animate = useCallback((time: number) => {
+    if (lastTimeRef.current !== undefined) {
+      if (!isPaused && !isPointerDown && !isDragging && !isNavigating && !isMobile) {
+        setOffset((prev) => {
+          let next = prev + SCROLL_SPEED;
+          if (next >= loopLimit) next = 0;
+          return next;
+        });
+      }
+    }
+    lastTimeRef.current = time;
+    requestRef.current = requestAnimationFrame(animate);
+  }, [isPaused, isPointerDown, isDragging, isNavigating, isMobile, loopLimit]);
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [animate]);
+
+  // Actions
+  const getSlotWidthPercent = () => {
+    if (!containerRef.current) return 100 / visibleItems;
+    const containerWidth = containerRef.current.offsetWidth;
+    // The total width of one item + its gap as a percentage of the container
+    return ((containerWidth / visibleItems + currentGap) / containerWidth) * 100;
+  };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length);
+    if (isNavigating) return;
+    setIsNavigating(true);
+    const slotWidth = getSlotWidthPercent();
+    setOffset((prev) => {
+        const nextIdx = Math.round(prev / slotWidth) + 1;
+        let nextPos = nextIdx * slotWidth;
+        if (nextPos >= totalReviews * slotWidth) nextPos = 0;
+        return nextPos;
+    });
+    setTimeout(() => setIsNavigating(false), 700);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    if (isNavigating) return;
+    setIsNavigating(true);
+    const slotWidth = getSlotWidthPercent();
+    setOffset((prev) => {
+        const nextIdx = Math.round(prev / slotWidth) - 1;
+        let nextPos = nextIdx * slotWidth;
+        if (nextPos < 0) nextPos = (totalReviews - visibleItems) * slotWidth;
+        return nextPos;
+    });
+    setTimeout(() => setIsNavigating(false), 700);
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setIsPointerDown(true);
+    setIsDragging(false);
+    setStartX(e.clientX);
+    setDragOffset(0);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isPointerDown) return;
+    const diff = e.clientX - startX;
+    
+    if (!isDragging && Math.abs(diff) > 10) {
+      setIsDragging(true);
+      if (containerRef.current) containerRef.current.setPointerCapture(e.pointerId);
+    }
+    
+    if (isDragging) {
+      setDragOffset(diff);
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (isDragging && containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const dragPercentage = (dragOffset / containerWidth) * 100;
+        
+        setOffset((prev) => {
+            let next = prev - dragPercentage;
+            // Snap to nearest item
+            next = Math.round(next / itemWidthPercent) * itemWidthPercent;
+            
+            // Loop boundaries
+            if (next < 0) next = (totalReviews - visibleItems) * itemWidthPercent;
+            if (next >= totalReviews * itemWidthPercent) next = 0;
+            
+            return next;
+        });
+        
+        containerRef.current.releasePointerCapture(e.pointerId);
+    }
+    
+    setIsPointerDown(false);
+    setIsDragging(false);
+    setDragOffset(0);
   };
 
   const handleExpand = (review: Review) => {
@@ -35,101 +178,83 @@ const ReviewsSection = () => {
 
   return (
     <section className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden bg-midnight" id="reviews">
-      {/* ... previous content ... */}
       <div 
         className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
         style={{ backgroundImage: "url('/images/parallax.jpg')" }}
       />
-      {/* Deep Midnight Tint Overlay */}
-      <div className="absolute inset-0 z-10 bg-[#0e1327]/40 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-10 bg-[#0e1327]/60 backdrop-blur-[2px]" />
 
       <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-20">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6 md:gap-8">
           <div className="flex flex-col items-start space-y-3">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3"
-            >
+            <div className="flex items-center gap-3">
               <div className="h-[1px] w-8 bg-[#c29226]" />
               <span className="text-[0.6rem] md:text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
                 Testimonials
               </span>
-            </motion.div>
+            </div>
             
-            <motion.h2 
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white font-geist-mono"
-            >
+            <h2 className="text-3xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white font-geist-mono">
               Client <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-1">Reviews</span>
-            </motion.h2>
+            </h2>
           </div>
 
-          {isCarousel && (
-            <div className="flex gap-2 md:gap-3 mb-2 self-start md:self-auto">
-              <button 
-                onClick={prevSlide}
-                className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
-              >
-                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
-              </button>
-              <button 
-                onClick={nextSlide}
-                className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
-              >
-                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
-              </button>
-            </div>
-          )}
+          <div className="flex gap-2 md:gap-3 mb-2 self-start md:self-auto">
+            <button 
+              onClick={prevSlide}
+              className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
+            >
+              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="p-2 md:p-3 rounded-full border border-white/10 hover:bg-white/5 text-white transition-all active:scale-90"
+            >
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+          </div>
         </div>
 
-        {isCarousel ? (
-          <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
-            <motion.div 
-              animate={{ x: `-${currentIndex * (100 / reviews.length)}%` }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{ 
-                width: `${reviews.length * 100}%`, // 1 per row on mobile
-              }}
-              className={cn(
-                "flex gap-6",
-                "md:!w-[calc(10 * 33.333%)]" // Desktop width override
-              )}
-            >
-              {reviews.map((rev, idx) => (
-                <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={true} onExpand={() => handleExpand(rev)} />
-              ))}
-            </motion.div>
-          </div>
-        ) : (
-          /* Grid Layout (if ≤ 3) - 1 column on mobile */
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {reviews.map((rev, idx) => (
-              <ReviewCard key={rev.id} rev={rev} idx={idx} isCarousel={false} onExpand={() => handleExpand(rev)} />
+        <div className="relative overflow-hidden w-full group">
+          <div 
+            ref={containerRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className={cn(
+                "flex gap-4 md:gap-6 will-change-transform",
+                isDragging ? "cursor-grabbing" : "cursor-grab",
+                // Transition only when not dragging
+                !isDragging && "transition-transform duration-700 ease-out"
+            )}
+            style={{ 
+              transform: `translateX(calc(-${offset}% + ${dragOffset}px))`,
+            }}
+          >
+            {extendedReviews.map((rev, idx) => (
+              <ReviewCard 
+                key={`${rev.id}-${idx}`} 
+                rev={rev} 
+                visibleItems={visibleItems}
+                onExpand={() => handleExpand(rev)} 
+              />
             ))}
           </div>
-        )}
+        </div>
 
         {/* Technical Summary Bar */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono uppercase tracking-[0.4em] text-white/10"
-        >
+        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono uppercase tracking-[0.4em] text-white/10">
           <div className="flex gap-8">
              <span>Verified Collaborations</span>
-             <span>Ref: {isCarousel ? `${currentIndex + 1}/${reviews.length}` : 'Static'}</span>
+             <span>Ref: Marquee Mode // {Math.round(offset)}%</span>
           </div>
           <div className="hidden md:block">
             Professional Testimonials // Jagot Jit Productions
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <ReviewModal 
@@ -141,40 +266,27 @@ const ReviewsSection = () => {
   );
 };
 
-interface Review {
-  id: string;
-  name: string;
-  designation: string;
-  review: string;
-  image?: string;
-}
-
 interface ReviewCardProps {
   rev: Review;
-  idx: number;
-  isCarousel: boolean;
+  visibleItems: number;
   onExpand: () => void;
 }
 
-const ReviewCard = ({ rev, idx, isCarousel, onExpand }: ReviewCardProps) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-
+const ReviewCard = ({ rev, visibleItems, onExpand }: ReviewCardProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: idx * 0.05 }}
-      className={`group relative ${isCarousel ? 'w-[calc(100%/var(--items))] md:w-[300px] lg:w-[340px] xl:w-[380px] flex-shrink-0' : ''} cursor-pointer`}
-      style={{ '--items': reviews.length } as React.CSSProperties}
+    <div
+      className="group relative cursor-pointer active:scale-[0.98] transition-transform duration-300 flex-shrink-0"
+      style={{ 
+          width: `calc((100% - ${(visibleItems - 1) * (visibleItems < 2 ? 0 : 24)}px) / ${visibleItems})`
+      }}
       onClick={onExpand}
     >
-      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative active:scale-[0.98]">
+      <div className="h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.05] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative">
         
         <Quote className="text-[#deee4d]/20 mb-4 group-hover:text-[#deee4d]/40 transition-colors shrink-0 w-8 h-8" />
 
         <div className="relative w-full">
-          <p className="text-white/60 font-space-grotesk text-xs leading-relaxed mb-6 md:mb-8 italic group-hover:text-white/80 transition-colors line-clamp-3">
+          <p className="text-white/60 font-space-grotesk text-[13px] md:text-sm leading-relaxed mb-6 md:mb-8 italic group-hover:text-white/80 transition-colors line-clamp-4">
             &ldquo;{rev.review}&rdquo;
           </p>
         </div>
@@ -194,17 +306,7 @@ const ReviewCard = ({ rev, idx, isCarousel, onExpand }: ReviewCardProps) => {
               </div>
             )}
           </div>
-          <div 
-            className="min-w-0 flex-1 relative"
-            onMouseEnter={(e) => {
-               e.stopPropagation();
-               setShowTooltip(true);
-            }}
-            onMouseLeave={(e) => {
-               e.stopPropagation();
-               setShowTooltip(false);
-            }}
-          >
+          <div className="min-w-0 flex-1 relative group/tooltip">
             <h4 className="text-white font-geist-mono font-medium text-base leading-tight group-hover:text-[#c29226] transition-colors truncate">
               {rev.name}
             </h4>
@@ -212,28 +314,18 @@ const ReviewCard = ({ rev, idx, isCarousel, onExpand }: ReviewCardProps) => {
               {rev.designation}
             </p>
 
-            {/* Designation Tooltip */}
-            <AnimatePresence>
-              {showTooltip && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute z-[100] bottom-full left-0 mb-3 w-[200px] p-3 bg-[#0e1327]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl pointer-events-none"
-                >
-                  <div className="absolute bottom-[-5px] left-4 w-2 h-2 bg-[#0e1327] border-r border-b border-white/10 rotate-45" />
-                  <p className="text-[#deee4d]/90 font-space-grotesk text-[0.6rem] uppercase tracking-wider font-bold leading-relaxed">
+            {/* Designation Tooltip (CSS only) */}
+            <div className="absolute z-[100] bottom-full left-0 mb-3 w-[220px] p-4 bg-[#0e1327]/95 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-2xl pointer-events-none opacity-0 group-hover/tooltip:opacity-100 translate-y-2 group-hover/tooltip:translate-y-0 transition-all duration-300">
+                <div className="absolute bottom-[-5px] left-4 w-2 h-2 bg-[#0e1327] border-r border-b border-white/10 rotate-45" />
+                <p className="text-[#deee4d]/90 font-space-grotesk text-[0.65rem] uppercase tracking-wider font-bold leading-relaxed">
                     {rev.designation}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </p>
+            </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 export default ReviewsSection;
-

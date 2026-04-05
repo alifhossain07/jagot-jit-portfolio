@@ -28,7 +28,7 @@ const Footer = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#deee4d]/20 blur-[120px] rounded-full -translate-x-1/2 translate-y-1/2" />
       </div>
 
-      <div className="w-11/12 lg:w-10/12 xl:w-9/12 mx-auto relative z-10">
+      <div className="w-11/12 lg:w-10/12 xl:w-10/12 mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 xl:gap-12 mb-12 lg:mb-16 xl:mb-20 text-center md:text-left">
           
           {/* Brand & Bio */}
@@ -40,7 +40,7 @@ const Footer = () => {
               Jagot Jit
             </Link>
             <p className="text-white/40 text-xs lg:text-sm leading-relaxed font-space-grotesk max-w-xs mx-auto md:mx-0">
-              Sound engineer and music producer specializing in high-fidelity recording, mixing, and artist-centric production. Delivering industry-standard sonic excellence.
+             Sound engineer and music producer focused on high-quality recording, mixing, and bringing out the best in every artist.
             </p>
             <div className="flex justify-center md:justify-start gap-4">
               {socialLinks.map(({ label, href, icon: Icon }) => (
@@ -87,10 +87,10 @@ const Footer = () => {
               Professional Services
             </h4>
             <div className="flex flex-col space-y-3">
-              <span className="text-sm text-white/20">Recording Engineering</span>
-              <span className="text-sm text-white/20">Hybrid Mixing</span>
-              <span className="text-sm text-white/20">Analog Mastering</span>
-              <span className="text-sm text-white/20">Artist Production</span>
+              <span className="text-sm text-white/20">Recording</span>
+              <span className="text-sm text-white/20">Mixing</span>
+              <span className="text-sm text-white/20">Mastering</span>
+              <span className="text-sm text-white/20">Production</span>
             </div>
           </div>
 

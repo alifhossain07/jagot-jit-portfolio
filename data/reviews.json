@@ -19,5 +19,26 @@
     "designation": "Founder of WatchTower Studios, Member of Shrapnel Method",
     "review": "JJ made working fun from day one. Things just flowed from our first note and couldn’t be happier with the outcome. You can tell he truly cares about everything he does in the studio, and outside. This makes me work repeatedly with this dude. Godspeed! .",
     "image": "/images/ashfaq.jpg"
+  },
+  {
+    "id": "4",
+    "name": "Aftab Moin Audhip",
+    "designation": "Drummer",
+    "review": "A very reliable producer who truly knows his craft",
+    "image": "/images/audhip.jpg"
+  },
+  {
+    "id": "5",
+    "name": "Umme Iyman",
+    "designation": "Vocalist",
+    "review": "Jagot is really quick. It takes him literally one second to come up with new ideas or solve technical problems",
+    "image": "/images/ayman.jpg"
+  },
+  {
+    "id": "6",
+    "name": "Syed Apurbo",
+    "designation": "Guitarist, Vocalist",
+    "review": "One of the best recording engineers and music producers I've ever worked with. Jagot is one of the few people whose input on any music aspect is valued and much appreciated between me and my fellow musicians. ",
+    "image": "/images/apurbo.jpg"
   }
 ]

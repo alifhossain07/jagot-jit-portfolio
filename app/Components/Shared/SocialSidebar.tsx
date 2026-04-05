@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,67 +14,68 @@ const socialLinks = [
     label: "WhatsApp",
     href: "https://wa.me/8801761629696",
     icon: FaWhatsapp,
-    color: "hover:text-[#25D366]",
+    color: "transition-colors hover:text-[#25D366]",
   },
   {
     label: "Facebook",
     href: "https://www.facebook.com/jagot.jit.7",
     icon: FaFacebookF,
-    color: "hover:text-[#1877F2]",
+    color: "transition-colors hover:text-[#1877F2]",
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/jagot_jit_/",
     icon: FaInstagram,
-    color: "hover:text-[#E4405F]",
+    color: "transition-colors hover:text-[#E4405F]",
   },
   {
     label: "Email",
     href: "mailto:jagotjitsaha@gmail.com?subject=Booking Inquiry",
     icon: FaEnvelope,
-    color: "hover:text-sand",
+    color: "transition-colors hover:text-sand",
   },
 ];
 
 const SocialSidebar = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // Initial entrance delay for that premium feel
+    const timer = setTimeout(() => setIsMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 1, duration: 0.8 }}
+    <div 
       className={cn(
-        "fixed right-3 md:right-6 top-1/2 lg:top-[40%] -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5 transition-all duration-500",
-        "p-1.5 gap-2",                 // Mobile base
-        "lg:p-2.5 lg:gap-3",          // lg to xl (reduced)
-        "2xl:p-3 2xl:gap-4"           // For 2xl
+        "fixed right-3 md:right-6 lg:top-[30%] top-[27%] -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5",
+        "p-1.5 gap-2 lg:p-2.5 lg:gap-3 2xl:p-3 2xl:gap-4",
+        "transition-all duration-700 delay-1000", // Smooth entrance only
+        !isMounted ? "opacity-0 translate-x-10" : "opacity-100 translate-x-0"
       )}
     >
       {socialLinks.map((social) => (
-        <motion.a
+        <a
           key={social.label}
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.2, x: -5 }}
           className={cn(
-            "text-ice duration-300 rounded-full hover:bg-white/10 flex items-center justify-center transition-all",
-            "w-7 h-7 md:w-8 md:h-8",    // Mobile sizes
-            "lg:w-9 lg:h-9",             // lg sizes
-            "2xl:w-11 2xl:h-11",         // 2xl sizes
+            "text-ice rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-300",
+            "w-7 h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 2xl:w-11 2xl:h-11",
+            "hover:scale-125 hover:-translate-x-1", // Keep the premium hover effect
             social.color
           )}
           aria-label={social.label}
         >
           <social.icon 
             className={cn(
-              "w-3.5 h-3.5",            // Mobile
-              "lg:w-4 lg:h-4",           // lg to xl
-              "2xl:w-5 2xl:h-5"          // 2xl
+              "w-3.5 h-3.5 lg:w-4 lg:h-4 2xl:w-5 2xl:h-5"
             )}
           />
-        </motion.a>
+        </a>
       ))}
-    </motion.div>
+    </div>
   );
 };
 

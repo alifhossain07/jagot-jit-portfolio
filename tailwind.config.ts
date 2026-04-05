@@ -36,11 +36,26 @@ const config: Config = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        breath: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(15px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "float": "float 6s ease-in-out infinite",
         "pulse-slow": "pulse-slow 8s ease-in-out infinite",
         marquee: "marquee 10s linear infinite",
+        breath: "breath 2s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "scale-in": "scale-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
     },
   },

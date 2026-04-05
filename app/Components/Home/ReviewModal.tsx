@@ -25,7 +25,7 @@ const ReviewModal = ({ isOpen, onClose, review }: ReviewModalProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/20 backdrop-blur-md">
+        <div id="review-modal" className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/20 backdrop-blur-md">
           {/* Backdrop click to close */}
           <motion.div 
             initial={{ opacity: 0 }}

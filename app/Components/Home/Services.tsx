@@ -1,9 +1,14 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
 import { Mic2, SlidersHorizontal, Zap, Music4 } from 'lucide-react';
 import Link from 'next/link';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 const services = [
   {
@@ -33,8 +38,33 @@ const services = [
 ];
 
 const Services = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden" id="services">
+    <section 
+      ref={sectionRef}
+      className="py-16 lg:py-20 xl:py-24 px-6 relative overflow-hidden" 
+      id="services"
+    >
       {/* Parallax Background */}
       <div 
         className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
@@ -45,39 +75,36 @@ const Services = () => {
 
       <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-20">
         <div className="flex flex-col items-center text-center mb-10 lg:mb-16 space-y-4 lg:space-y-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 relative z-20"
-          >
+          <div className={cn(
+            "flex items-center gap-3 relative z-20 opacity-0",
+            isVisible && "animate-fade-in-up"
+          )}>
             <div className="h-[1px] w-6 lg:w-8 bg-[#c29226]" />
             <span className="text-[0.6rem] lg:text-[0.65rem] font-bold uppercase tracking-[0.5em] text-[#deee4d]">
               Services
             </span>
             <div className="h-[1px] w-6 lg:w-8 bg-[#c29226]" />
-          </motion.div>
+          </div>
           
-          <motion.h2 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl lg:text-4xl xl:text-5xl font-light tracking-tighter text-white font-geist-mono relative z-10 leading-[1.2]"
-          >
+          <h2 className={cn(
+            "text-3xl lg:text-4xl xl:text-5xl font-light tracking-tighter text-white font-geist-mono relative z-10 leading-[1.2] opacity-0",
+            isVisible && "animate-fade-in-up [animation-delay:200ms]"
+          )}>
             My <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-1">Specialties</span>
-          </motion.h2>
+          </h2>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
           {services.map((service, idx) => (
-            <motion.div
+            <div
               key={service.title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="group"
+              className={cn(
+                "group opacity-0",
+                isVisible && "animate-scale-in"
+              )}
+              style={{ 
+                animationDelay: `${idx * 100 + 400}ms` 
+              }}
             >
               <div className="relative h-full bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-xl lg:rounded-3xl p-3.5 lg:p-6 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 {/* Minimal Icon Area */}
@@ -100,7 +127,7 @@ const Services = () => {
                   {service.title}
                 </h3>
                 
-                <p className="text-white/60 font-space-grotesk text-[9px] lg:text-xs leading-relaxed group-hover:text-white/90 transition-colors">
+                <p className="text-white/40 font-space-grotesk text-[9px] lg:text-xs leading-relaxed group-hover:text-white/90 transition-colors">
                   {service.description}
                 </p>
                 
@@ -110,24 +137,21 @@ const Services = () => {
                   style={{ backgroundColor: service.color }}
                 />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-12 lg:mt-16 flex justify-center"
-        >
+        <div className={cn(
+          "mt-12 lg:mt-16 flex justify-center opacity-0",
+          isVisible && "animate-fade-in-up [animation-delay:1000ms]"
+        )}>
           <Link
             href="#booking"
-            className="group relative inline-flex items-center justify-center rounded-full border border-ice/20 px-8 lg:px-10 py-3 lg:py-4 text-[10px] lg:text-xs font-bold uppercase tracking-[0.3em] text-ice shadow-[0_0_15px_rgba(239,252,253,0.1)] transition-all duration-500 bg-[#747a3e] hover:bg-[#c29226] hover:text-midnight hover:scale-105 active:scale-95"
+            className="group relative inline-flex items-center justify-center rounded-full border border-ice/20 px-8 lg:px-10 py-3 lg:py-4 text-[10px] lg:text-xs font-bold uppercase tracking-[0.3em] text-ice shadow-[0_0_15px_rgba(239,252,253,0.1)] transition-all duration-500 bg-[#747a3e] hover:bg-[#deee4d] hover:text-midnight hover:scale-105 active:scale-95"
           >
             Book a Session
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

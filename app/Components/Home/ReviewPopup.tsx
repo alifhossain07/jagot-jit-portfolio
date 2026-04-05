@@ -20,6 +20,7 @@ const ReviewPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [randomReview, setRandomReview] = useState<Review | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -44,6 +45,21 @@ const ReviewPopup = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Detect if footer is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsFooterVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+ 
+    const footer = document.getElementById('footer');
+    if (footer) observer.observe(footer);
+ 
+    return () => {
+      if (footer) observer.unobserve(footer);
+    };
+  }, []);
+
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsVisible(false);
@@ -58,17 +74,17 @@ const ReviewPopup = () => {
   return (
     <>
       <AnimatePresence>
-        {isVisible && !isExpanded && (
+        {isVisible && !isExpanded && !isFooterVisible && (
           <motion.div
             initial={{ opacity: 0, x: 100, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 100, scale: 0.9 }}
             transition={{ type: 'spring', damping: 20, stiffness: 100 }}
-            className="fixed bottom-6 right-6 md:bottom-24 md:right-8 z-[60] w-[260px] md:w-[320px] max-w-[calc(100vw-2rem)]"
+            className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[10000] w-[260px] md:w-[320px] max-w-[calc(100vw-2rem)]"
           >
             <div 
               onClick={handleCardClick}
-              className="relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group transition-all duration-300 cursor-pointer active:scale-95"
+              className="relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-5 shadow-[0_30px_70px_rgba(0,0,0,0.6)] group transition-all duration-300 cursor-pointer active:scale-95"
             >
               {/* Close Button */}
               <button
@@ -81,7 +97,7 @@ const ReviewPopup = () => {
               {/* Decorative Accent */}
               <div className="absolute -top-10 -left-10 w-24 h-24 bg-[#c29226]/20 blur-3xl rounded-full" />
 
-              <div className="relative space-y-2 md:space-y-4">
+              <div className="relative space-y-2 md:space-y-3">
                 <div className="flex items-center gap-2">
                   <Quote size={14} className="text-[#deee4d] md:w-4 md:h-4" />
                   <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-[#deee4d]/60">
@@ -89,8 +105,8 @@ const ReviewPopup = () => {
                   </span>
                 </div>
 
-                <p className="text-white/80 text-[10px] md:text-xs leading-relaxed font-space-grotesk italic line-clamp-2 md:line-clamp-none">
-                  &ldquo;{randomReview.review.slice(0, 60)}{randomReview.review.length > 60 ? '...' : ''}&rdquo;
+                <p className="text-white/80 text-[11px] md:text-sm leading-relaxed font-space-grotesk italic line-clamp-2">
+                  &ldquo;{randomReview.review.slice(0, 80)}{randomReview.review.length > 80 ? '...' : ''}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-3 pt-2">
