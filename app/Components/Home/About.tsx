@@ -60,11 +60,11 @@ export default function AboutSection() {
               <p className="text-[9px] lg:text-[10px] xl:text-xs">Years Experience</p>
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-2 lg:px-3 xl:px-4 2xl:px-5 py-2 lg:py-3 rounded-md shrink-0">
-              <p className="font-geist-mono text-lg lg:text-xl font-bold">60+</p>
+              <p className="font-geist-mono text-lg lg:text-xl font-bold">50+</p>
               <p className="text-[9px] lg:text-[10px] xl:text-xs">Songs Produced</p>
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-2 lg:px-3 xl:px-4 2xl:px-5 py-2 lg:py-3 rounded-md shrink-0">
-              <p className="font-geist-mono text-lg lg:text-xl font-bold">20+</p>
+              <p className="font-geist-mono text-lg lg:text-xl font-bold">15+</p>
               <p className="text-[9px] lg:text-[10px] xl:text-xs">Artists Worked With</p>
             </div>
           </div>
