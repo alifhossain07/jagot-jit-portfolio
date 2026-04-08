@@ -56,7 +56,7 @@ const SocialSidebar = () => {
   return (
     <div 
       className={cn(
-        "fixed right-3 md:right-6 lg:top-[45%] top-[27%] -translate-y-1/2 z-[100] flex flex-col backdrop-blur-xl border border-white/10 shadow-2xl rounded-full bg-white/5",
+        "fixed right-3 md:right-6 lg:top-[45%] top-[27%] -translate-y-1/2 z-[100] flex flex-col backdrop-blur-0 md:backdrop-blur-sm border border-white/10 shadow-2xl rounded-full bg-white/5",
         "p-1.5 gap-2 lg:p-2.5 lg:gap-3 2xl:p-3 2xl:gap-4",
         "transition-all duration-700 delay-1000", // Smooth entrance only
         !isMounted ? "opacity-0 translate-x-10" : "opacity-100 translate-x-0"

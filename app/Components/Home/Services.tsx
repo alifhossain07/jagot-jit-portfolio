@@ -67,11 +67,11 @@ const Services = () => {
     >
       {/* Parallax Background */}
       <div 
-        className="absolute inset-0 z-0 bg-fixed bg-cover bg-center grayscale contrast-125 opacity-40"
+        className="absolute inset-0 z-0 bg-cover bg-center grayscale contrast-125 opacity-40 md:bg-fixed"
         style={{ backgroundImage: "url('/images/parallax.jpg')" }}
       />
       {/* Deep Midnight Tint Overlay */}
-      <div className="absolute inset-0 z-10 bg-[#0e1327]/40 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-10 bg-[#0e1327]/50 md:bg-[#0e1327]/40 md:backdrop-blur-[1px]" />
 
       <div className="max-w-6xl 2xl:max-w-7xl mx-auto relative z-20">
         <div className="flex flex-col items-center text-center mb-10 lg:mb-16 space-y-4 lg:space-y-6">
@@ -106,7 +106,7 @@ const Services = () => {
                 animationDelay: `${idx * 100 + 400}ms` 
               }}
             >
-              <div className="relative h-full bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-xl lg:rounded-3xl p-3.5 lg:p-6 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <div className="relative h-full bg-white/[0.06] md:bg-white/[0.05] backdrop-blur-0 md:backdrop-blur-sm border border-white/10 rounded-xl lg:rounded-3xl p-3.5 lg:p-6 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 {/* Minimal Icon Area */}
                 <div 
                   className="w-8 h-8 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl flex items-center justify-center mb-2.5 lg:mb-4 transition-all duration-500 group-hover:scale-110 shadow-lg"

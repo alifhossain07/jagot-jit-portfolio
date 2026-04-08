@@ -116,7 +116,7 @@ const ReviewPopup = () => {
           >
             <div 
               onClick={handleCardClick}
-              className="relative overflow-hidden bg-midnight/80 backdrop-blur-2xl border border-white/20 rounded-3xl p-4 md:p-5 shadow-[0_30px_70px_rgba(0,0,0,0.6)] group transition-all duration-300 cursor-pointer active:scale-95"
+              className="relative overflow-hidden bg-midnight/85 md:bg-midnight/80 backdrop-blur-0 md:backdrop-blur-sm border border-white/20 rounded-3xl p-4 md:p-5 shadow-[0_30px_70px_rgba(0,0,0,0.6)] group transition-all duration-300 cursor-pointer active:scale-95"
             >
               {/* Close Button */}
               <button
@@ -147,6 +147,7 @@ const ReviewPopup = () => {
                       src={randomReview.image}
                       alt={randomReview.name}
                       fill
+                      sizes="32px"
                       className="object-cover"
                     />
                   </div>

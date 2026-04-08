@@ -25,7 +25,7 @@ const ReviewModal = ({ isOpen, onClose, review }: ReviewModalProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div id="review-modal" className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/20 backdrop-blur-md">
+        <div id="review-modal" className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/30 md:bg-black/20 backdrop-blur-0 md:backdrop-blur-sm">
           {/* Backdrop click to close */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -67,7 +67,13 @@ const ReviewModal = ({ isOpen, onClose, review }: ReviewModalProps) => {
             <div className="relative flex items-center gap-4 pt-6 border-t border-white/10">
               <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-white/5 flex-shrink-0">
                 {review.image ? (
-                  <Image src={review.image} alt={review.name} fill className="object-cover" />
+                  <Image
+                    src={review.image}
+                    alt={review.name}
+                    fill
+                    sizes="(max-width: 768px) 56px, 64px"
+                    className="object-cover"
+                  />
                 ) : (
                   <div className="absolute inset-0 bg-[#c29226]/10 flex items-center justify-center text-white/20 text-xl font-mono">
                     {review.name.charAt(0)}

@@ -188,7 +188,7 @@ const MusicSection = () => {
                   }}
                 >
                   <div className={cn(
-                    "group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-500",
+                    "group relative bg-white/5 backdrop-blur-0 md:backdrop-blur-sm border border-white/10 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-500",
                     "hover:border-[#c29226]/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)]",
                     isThisPlaying && "border-[#deee4d]/40 ring-1 ring-[#deee4d]/20"
                   )}>
@@ -205,6 +205,7 @@ const MusicSection = () => {
                         src={track.image}
                         alt={track.title}
                         fill
+                        sizes="(max-width: 640px) 70vw, (max-width: 1024px) 45vw, 24vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       

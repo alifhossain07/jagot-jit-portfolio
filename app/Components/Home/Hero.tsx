@@ -18,7 +18,7 @@ const Hero = () => {
         {/* Image - On top for mobile (Order 1), on right for desktop (Order 2) */}
         <div className="relative mx-auto w-full max-w-[240px] sm:max-w-[340px] lg:max-w-[360px] xl:max-w-[320px] 2xl:max-w-[440px] lg:ml-auto lg:order-2">
           {/* Main Image Frame with HUD Decorations */}
-          <div className="relative aspect-[4/5] bg-white/[0.03] backdrop-blur-3xl rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.6)] group">
+          <div className="relative aspect-[4/5] bg-white/[0.03] backdrop-blur-0 md:backdrop-blur-sm rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.6)] group">
             
             {/* Image with technical treatment */}
             <div className="absolute inset-2 rounded-[1.2rem] sm:rounded-[2rem] overflow-hidden transition-all duration-700">
