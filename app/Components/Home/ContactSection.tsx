@@ -3,6 +3,10 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { openEmailComposer } from "@/app/lib/emailComposer";
+
+const EMAIL_TO = "jagotjitsaha@gmail.com";
+const EMAIL_SUBJECT = "Booking Inquiry";
 
 const socialLinks = [
   {
@@ -28,7 +32,7 @@ const socialLinks = [
   },
   {
     label: "Email",
-    href: "mailto:jagotjitsaha@gmail.com?subject=Booking Inquiry",
+    href: "#",
     icon: FaEnvelope,
     text: "Email Me",
     color: "#c29226", // Use Gold icon for email against dark background
@@ -36,6 +40,11 @@ const socialLinks = [
 ];
 
 const ContactSection = () => {
+  const handleEmailClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    openEmailComposer({ to: EMAIL_TO, subject: EMAIL_SUBJECT });
+  };
+
   return (
     <section id="booking" className="relative py-12 px-5 md:px-10 bg-[#c29226] overflow-hidden">
       <div className="absolute inset-0 bg-grain opacity-[0.12] pointer-events-none" />
@@ -74,8 +83,9 @@ const ContactSection = () => {
             <motion.a
               key={social.label}
               href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={social.label === "Email" ? handleEmailClick : undefined}
+              target={social.label === "Email" ? undefined : "_blank"}
+              rel={social.label === "Email" ? undefined : "noopener noreferrer"}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               animate={{ backgroundColor: "#1e2642" }}

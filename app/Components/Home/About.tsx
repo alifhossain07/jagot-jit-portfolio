@@ -43,15 +43,15 @@ export default function AboutSection() {
             Introducing Jagot Jit
           </h2>
           <p className="text-sm lg:text-base 2xl:text-lg leading-relaxed text-white/80">
-           Jagot Jit is a sound engineer and music producer helping artists bring their music to life. He also performs live,playing drums for Nivaniya and keyboard for Conclusion, and works as a session keyboardist.
+           Jagot Jit is a  Music Producer and Sound Engineer based in Dhaka, Bangladesh helping artists bring their music to life. He also performs live,playing drums for Nivaniya and keyboard for Conclusion, and works as a session keyboardist.
           </p>
 
           <ul className="space-y-1 lg:space-y-2 text-xs lg:text-sm xl:text-md">
             <li>🎧 Music Producer & Sound Engineer</li>
-            <li>🎹 Keyboardist — Conclusion</li>
+            <li>🎹 Keyboardist — Conclusion & Other Session Projects</li>
             <li>🥁 Drummer — Nivaniya</li>
-            <li>🎧 Former Live Sound Engineer — Conclusion</li>
-            <li>🎼 Session Keyboardist — Various Bands</li>
+            <li>🎧 Live Sound Engineer — Conclusion</li>
+           
           </ul>
 
           <div className="flex flex-nowrap gap-2 lg:gap-3 xl:gap-4 2xl:gap-6 pt-2 lg:pt-4 justify-start">

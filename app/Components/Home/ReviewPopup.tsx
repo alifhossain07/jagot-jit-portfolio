@@ -21,6 +21,8 @@ const ReviewPopup = () => {
   const [randomReview, setRandomReview] = useState<Review | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [isMusicSectionVisible, setIsMusicSectionVisible] = useState(false);
+  const [isReviewsSectionVisible, setIsReviewsSectionVisible] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -60,6 +62,36 @@ const ReviewPopup = () => {
     };
   }, []);
 
+  // Suppress popup while music or reviews sections are in view.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target.id === 'productions') {
+            setIsMusicSectionVisible(entry.isIntersecting);
+          }
+
+          if (entry.target.id === 'reviews') {
+            setIsReviewsSectionVisible(entry.isIntersecting);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    const musicSection = document.getElementById('productions');
+    const reviewsSection = document.getElementById('reviews');
+
+    if (musicSection) observer.observe(musicSection);
+    if (reviewsSection) observer.observe(reviewsSection);
+
+    return () => {
+      if (musicSection) observer.unobserve(musicSection);
+      if (reviewsSection) observer.unobserve(reviewsSection);
+      observer.disconnect();
+    };
+  }, []);
+
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsVisible(false);
@@ -74,7 +106,7 @@ const ReviewPopup = () => {
   return (
     <>
       <AnimatePresence>
-        {isVisible && !isExpanded && !isFooterVisible && (
+        {isVisible && !isExpanded && !isFooterVisible && !isMusicSectionVisible && !isReviewsSectionVisible && (
           <motion.div
             initial={{ opacity: 0, x: 100, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}

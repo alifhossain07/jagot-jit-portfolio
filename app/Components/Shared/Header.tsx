@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { FaFacebookF, FaInstagram, FaSpotify, FaWhatsapp, FaEnvelope } from "react-icons/fa";
+import { openEmailComposer } from "@/app/lib/emailComposer";
+
+const EMAIL_TO = "jagotjitsaha@gmail.com";
+const EMAIL_SUBJECT = "Booking Inquiry";
 
 const navLinks = [
   { label: "Home", href: "/#home" },
@@ -16,7 +20,7 @@ const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/jagot_jit_/", icon: FaInstagram },
   { label: "WhatsApp", href: "https://wa.me/8801761629696", icon: FaWhatsapp },
   { label: "Spotify", href: "https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1", icon: FaSpotify },
-  { label: "Email", href: "mailto:jagotjitsaha@gmail.com?subject=Booking Inquiry", icon: FaEnvelope },
+  { label: "Email", href: "#", icon: FaEnvelope },
 ];
 
 const Header = () => {
@@ -38,6 +42,10 @@ const Header = () => {
   }, []);
 
   const handleNavClick = () => setMenuOpen(false);
+  const handleEmailClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    openEmailComposer({ to: EMAIL_TO, subject: EMAIL_SUBJECT });
+  };
 
   return (
     <header
@@ -79,8 +87,9 @@ const Header = () => {
               <a
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noreferrer"
+                onClick={label === "Email" ? handleEmailClick : undefined}
+                target={label === "Email" ? undefined : "_blank"}
+                rel={label === "Email" ? undefined : "noreferrer"}
                 aria-label={label}
                 className="text-ice text-base transition-all duration-300 hover:text-sand"
               >
@@ -150,8 +159,9 @@ const Header = () => {
             <a
               key={label}
               href={href}
-              target="_blank"
-              rel="noreferrer"
+              onClick={label === "Email" ? handleEmailClick : undefined}
+              target={label === "Email" ? undefined : "_blank"}
+              rel={label === "Email" ? undefined : "noreferrer"}
               aria-label={label}
               className="text-sand text-base transition-colors duration-300 hover:text-ice"
             >
