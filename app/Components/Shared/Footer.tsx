@@ -14,7 +14,7 @@ const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/jagot.jit.7", icon: FaFacebookF },
   { label: "Instagram", href: "https://www.instagram.com/jagot_jit_/", icon: FaInstagram },
   { label: "WhatsApp", href: "https://wa.me/8801761629696", icon: FaWhatsapp },
-  { label: "Spotify", href: "https://spotify.com", icon: FaSpotify },
+  { label: "Spotify", href: "https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1", icon: FaSpotify },
 ];
 
 const Footer = () => {
