@@ -3,12 +3,15 @@
 import React from 'react';
 import { useMusic, Track } from '@/app/Context/MusicContext';
 import { Play, Pause, ExternalLink, ArrowLeft } from 'lucide-react';
+import { FaSpotify } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import musicData from '@/data/spotify_playlist.json';
+
+const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -131,6 +134,18 @@ export default function ProductionsPage() {
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="mt-10 md:mt-14 flex justify-center">
+          <a
+            href={SPOTIFY_PLAYLIST_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 rounded-full border border-[#deee4d]/30 bg-[#c29226] px-6 py-3 text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_8px_25px_rgba(0,0,0,0.28)] transition-all duration-300 hover:bg-[#d8a133] hover:scale-[1.03] lg:animate-breath"
+          >
+            <FaSpotify className="h-4 w-4 md:h-5 md:w-5 text-[#1DB954]" aria-hidden="true" />
+            <span>Open Spotify Playlist</span>
+          </a>
         </div>
 
         {/* Technical Footer */}
