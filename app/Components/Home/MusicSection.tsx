@@ -12,6 +12,11 @@ import musicData from '@/data/spotify_playlist.json';
 
 const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1';
 
+const getPlatformLabel = (url: string) => {
+  const lowerUrl = url.toLowerCase();
+  return lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be') ? 'YouTube' : 'Spotify';
+};
+
 // Utility for cleaner class management
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -181,6 +186,7 @@ const MusicSection = () => {
             {displayTracks.map((track) => {
               const isCurrent = currentTrack?.id === track.id;
               const isThisPlaying = isCurrent && isPlaying;
+              const platformLabel = getPlatformLabel(track.url);
 
               return (
                 <div 
@@ -259,7 +265,7 @@ const MusicSection = () => {
                           className="flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.2em] text-[#deee4d]/60 hover:text-[#deee4d] transition-colors"
                         >
                           <ExternalLink size={12} />
-                          <span>Open in Spotify</span>
+                          <span>Open in {platformLabel}</span>
                         </a>
                         <span className="text-[10px] font-mono text-white/20">
                           {track.duration}

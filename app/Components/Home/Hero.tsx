@@ -6,7 +6,6 @@ import Link from "next/link";
 
 
 
-
 const Hero = () => {
   return (
     <section
@@ -69,6 +68,8 @@ const Hero = () => {
                 Sound Engineer <span className="text-[#c29226] mx-1 sm:mx-2">&</span> Producer
             </h2>
           </div>
+
+         
 
           <div className="mt-4 lg:mt-6 flex flex-row items-center gap-3 sm:gap-8 justify-center lg:justify-start w-full">
             <Link

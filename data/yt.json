@@ -1,0 +1,27 @@
+﻿{
+  "playlistName": "Jagot Jit Productions",
+  "owner": "SamudraJS",
+  "playlistImage": "",
+  "totalTracksCollected": 2,
+  "expectedTracksCount": 2,
+  "tracks": [
+    {
+      "id": "mKFPAM7m-Lw",
+      "title": "আতশকাচে জোছনা | Atoshkache Jochhona | SHOJAARU | Original Lyric Video",
+      "artists": [
+        "SHOJAARU"
+      ],
+      "image": "https://img.youtube.com/vi/mKFPAM7m-Lw/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=mKFPAM7m-Lw"
+    },
+    {
+      "id": "cXYSxwapk0c",
+      "title": "Rafid - Moushumi pakhi",
+      "artists": [
+        "Rafidul Hoque"
+      ],
+      "image": "https://img.youtube.com/vi/cXYSxwapk0c/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=cXYSxwapk0c"
+    }
+  ]
+}

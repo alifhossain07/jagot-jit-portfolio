@@ -13,6 +13,11 @@ import musicData from '@/data/spotify_playlist.json';
 
 const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1';
 
+const getPlatformLabel = (url: string) => {
+  const lowerUrl = url.toLowerCase();
+  return lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be') ? 'YouTube' : 'Spotify';
+};
+
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -59,6 +64,7 @@ export default function ProductionsPage() {
           {musicData.tracks.map((track, idx) => {
             const isCurrent = currentTrack?.id === track.id;
             const isThisPlaying = isCurrent && isPlaying;
+            const platformLabel = getPlatformLabel(track.url);
 
             return (
               <motion.div 
@@ -124,7 +130,7 @@ export default function ProductionsPage() {
                       className="flex items-center gap-1.5 md:gap-2 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] text-[#deee4d]/60 hover:text-[#deee4d] transition-colors"
                     >
                       <ExternalLink className="w-2.5 h-2.5 md:w-3 md:h-3" />
-                      <span className="truncate max-w-[60px] md:max-w-none">Spotify</span>
+                      <span className="truncate max-w-[60px] md:max-w-none">{platformLabel}</span>
                     </a>
                     <span className="text-[8px] md:text-[10px] font-mono text-white/20 whitespace-nowrap">
                       {track.duration}

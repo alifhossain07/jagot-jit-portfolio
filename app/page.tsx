@@ -5,6 +5,8 @@ import Services from "./Components/Home/Services";
 import ReviewsSection from "./Components/Home/ReviewsSection";
 import ContactSection from "./Components/Home/ContactSection";
 import ReviewPopup from "./Components/Home/ReviewPopup";
+import SocialProof from "./Components/Home/SocialProof";
+
 
 const siteUrl = "https://jagotjitproductions.com";
 
@@ -83,6 +85,7 @@ export default function Home() {
 <section id="services"><Services /></section>
 <section id="productions"><MusicSection /></section>
 <section id="reviews"><ReviewsSection /></section>
+<section id="featured-on"><SocialProof /></section>
 <section id="contact"><ContactSection /></section>
 
       {/* Timed Overlays */}
