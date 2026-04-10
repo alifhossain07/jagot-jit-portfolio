@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   creator: "Jagot Jit",
   publisher: "Jagot Jit",
   alternates: {
-    canonical: "/",
+    canonical: "https://jagotjitproductions.com",
   },
   openGraph: {
     type: "website",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     url: "/",
     title: "Jagot Jit | Music Producer & Audio Engineer",
     description:
-      "Mixing, mastering, production, and session services for artists worldwide.",
+      "Jagot Jit is a music producer and sound engineer based in Dhaka, offering mixing, mastering, and full-scale music production services for artists worldwide.",
     siteName: "Jagot Jit",
     images: [
       {
@@ -102,6 +102,44 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+             __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://jagotjitproductions.com/#person",
+      name: "Jagot Jit",
+      url: "https://jagotjitproductions.com",
+      image: "https://jagotjitproductions.com/images/jagot2.jpg",
+      jobTitle: "Music Producer & Audio Engineer",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Dhaka",
+        addressCountry: "BD",
+      },
+      sameAs: [
+        "https://instagram.com/jagot_jit_/",
+        "https://www.facebook.com/jagot.jit.7",
+        "https://open.spotify.com/playlist/1NQf9Wq0Nt7Fih4vzlfLhj?nd=1"
+      ]
+            }),
+          }}
+        />
+
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Jagot Jit",
+      url: "https://jagotjitproductions.com",
+    }),
+  }}
+/>
+      </head>
       <body className={`${bricolageGrotesque.variable} ${spaceGrotesk.variable} antialiased bg-[#525333] min-h-screen relative`}>
         {/* 70s Film Grain Overlay */}
         <div 

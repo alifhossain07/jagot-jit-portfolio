@@ -138,7 +138,7 @@ export default function AboutSection() {
             <div className="absolute top-0 left-0 w-[85%] h-[65%] z-10 -translate-x-4 shadow-2xl">
               <Image
                 src="/images/studio1.jpg"
-                alt="Jagot Jit studio"
+                alt="Jagot Jit in studio"
                 fill
                 className="rounded-2xl object-cover border-2 border-[#deee4d]/30"
               />
@@ -148,7 +148,7 @@ export default function AboutSection() {
             <div className="absolute bottom-0 right-0 w-[85%] h-[65%] z-0 translate-x-4 shadow-2xl">
               <Image
                 src="/images/studio.jpg"
-                alt="Studio setup"
+                alt="Jagot Jit in studio"
                 fill
                 className="rounded-2xl object-cover border-2 border-[#deee4d]/30"
               />

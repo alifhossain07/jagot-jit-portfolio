@@ -24,7 +24,7 @@ const Hero = () => {
             <div className="absolute inset-2 rounded-[1.2rem] sm:rounded-[2rem] overflow-hidden transition-all duration-700">
               <Image
                 src="/images/jagot2.jpg"
-                alt="Jagot Jit"
+                alt="Jagot Jit music producer and sound engineer in studio"
                 fill
                 priority
                 className="object-cover"
