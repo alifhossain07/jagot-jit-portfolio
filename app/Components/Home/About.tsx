@@ -92,39 +92,38 @@ export default function AboutSection() {
             Jagot Jit is a sound engineer and music producer who works with artists and bands on recording, mixing, and music production. He also performs as a musician, playing drums for Nivaniya and keyboard for Conclusion.
           </p>
 
-          <ul className="space-y-2 text-[11px] text-white/70">
+          <ul className="space-y-2 text-[11px] ">
             <li>🎧 Music Producer & Sound Engineer</li>
-            <li>🎹 Keyboardist — Conclusion</li>
+            <li>🎹 Keyboardist — Conclusion & Other Session Projects</li>
             <li>🥁 Drummer — Nivaniya</li>
-            <li>🎚 Former Live Sound Engineer — Conclusion</li>
-            <li>🎼 Session Keyboardist — Various Bands</li>
+            <li>🎧 Live Sound Engineer — Conclusion</li>
           </ul>
 
         <div className="flex justify-center flex-wrap gap-3 pt-4">
   
   <div className="bg-white/20 backdrop-blur-sm px-3 lg:px-4 py-1.5 lg:py-2 rounded-md border border-white/5">
-    <p className="font-geist-mono text-base lg:text-lg font-bold text-white leading-none">
+    <p className="font-geist-mono text-base lg:text-lg font-medium  leading-none">
       5+
     </p>
-    <p className="text-[9px] uppercase tracking-wider leading-none text-white/80">
+    <p className="text-[9px] uppercase tracking-wider leading-none ">
       Years Exp
     </p>
   </div>
 
   <div className="bg-white/20 backdrop-blur-sm px-3 lg:px-4 py-1.5 lg:py-2 rounded-md border border-white/5">
-    <p className="font-geist-mono text-base lg:text-lg font-bold text-white leading-none">
-      35+
+    <p className="font-geist-mono text-base lg:text-lg font-medium  leading-none">
+     50+
     </p>
-    <p className="text-[9px] uppercase tracking-wider leading-none text-white/80">
+    <p className="text-[9px] uppercase tracking-wider leading-none ">
       Produced
     </p>
   </div>
 
   <div className="bg-white/20 backdrop-blur-sm px-3 lg:px-4 py-1.5 lg:py-2 rounded-md border border-white/5">
-    <p className="font-geist-mono text-base lg:text-lg font-bold text-white leading-none">
-      10+
+    <p className="font-geist-mono text-base lg:text-lg font-medium  leading-none">
+      15+
     </p>
-    <p className="text-[9px] uppercase tracking-wider leading-none text-white/80">
+    <p className="text-[9px] uppercase tracking-wider leading-none ">
       Artists
     </p>
   </div>
