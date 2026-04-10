@@ -278,7 +278,7 @@ const MusicSection = () => {
             href={SPOTIFY_PLAYLIST_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-full border border-[#deee4d]/30 bg-[#deee4d] px-5 py-3 md:px-7 text-[11px] md:text-sm font-semibold uppercase tracking-[0.18em] text-black shadow-[0_8px_25px_rgba(0,0,0,0.28)] transition-all duration-300 hover:bg-[#d8a133] hover:scale-[1.03] lg:animate-breath"
+            className="inline-flex items-center gap-3 rounded-full border border-[#deee4d]/30 bg-[#ebb129]   px-5 py-3 md:px-7 text-[11px] md:text-sm font-semibold uppercase tracking-[0.18em] text-black shadow-[0_8px_25px_rgba(0,0,0,0.28)] transition-all duration-300 hover:bg-[#d8a133] hover:scale-[1.03] lg:animate-breath"
           >
             <FaSpotify className="h-4 w-4 md:h-5 md:w-5 text-[#1DB954]" aria-hidden="true" />
             <span>Open Spotify Playlist</span>

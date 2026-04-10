@@ -25,7 +25,7 @@ const socialLinks = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/direct/t/jagot_jit_/",
+    href: "https://ig.me/m/jagot_jit_",
     icon: FaInstagram,
     text: "Direct DM",
     color: "#E4405F",
@@ -86,6 +86,7 @@ const ContactSection = () => {
               onClick={social.label === "Email" ? handleEmailClick : undefined}
               target={social.label === "Email" ? undefined : "_blank"}
               rel={social.label === "Email" ? undefined : "noopener noreferrer"}
+              aria-label={social.label}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               animate={{ backgroundColor: "#1e2642" }}

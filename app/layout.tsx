@@ -4,6 +4,15 @@ import "./globals.css";
 import Header from "./Components/Shared/Header";
 import SocialSidebar from "./Components/Shared/SocialSidebar";
 
+const siteUrl = "https://jagotjitproductions.com";
+const metadataBase = (() => {
+  try {
+    return new URL(siteUrl);
+  } catch {
+    return new URL("https://example.com");
+  }
+})();
+
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
@@ -17,8 +26,69 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Jagot Jit - Music Producer & Audio Engineer",
-  description: "Created by Alif Hossain ",
+  metadataBase,
+  title: {
+    default: "Jagot Jit | Music Producer & Audio Engineer",
+    template: "%s | Jagot Jit",
+  },
+  description:
+    "Music producer and sound engineer in Dhaka. Mixing, mastering, production, session work, and release-ready sound for artists worldwide.",
+  keywords: [
+    "Jagot Jit",
+    "music producer",
+    "sound engineer",
+    "mixing engineer",
+    "mastering engineer",
+    "Dhaka music producer",
+    "audio engineering",
+    "music production services",
+  ],
+  authors: [{ name: "Jagot Jit" }],
+  creator: "Jagot Jit",
+  publisher: "Jagot Jit",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    title: "Jagot Jit | Music Producer & Audio Engineer",
+    description:
+      "Mixing, mastering, production, and session services for artists worldwide.",
+    siteName: "Jagot Jit",
+    images: [
+      {
+        url: "/images/jagot2.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Jagot Jit in studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jagot Jit | Music Producer & Audio Engineer",
+    description:
+      "Mixing, mastering, production, and session services for artists worldwide.",
+    images: ["/images/jagot2.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 };
 
 import { MusicProvider } from "./Context/MusicContext";
