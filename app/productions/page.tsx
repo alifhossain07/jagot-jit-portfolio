@@ -64,6 +64,7 @@ export default function ProductionsPage() {
           {musicData.tracks.map((track, idx) => {
             const isCurrent = currentTrack?.id === track.id;
             const isThisPlaying = isCurrent && isPlaying;
+            const isYouTubeTrack = track.url.toLowerCase().includes('youtube.com') || track.url.toLowerCase().includes('youtu.be');
             const platformLabel = getPlatformLabel(track.url);
 
             return (
@@ -89,7 +90,13 @@ export default function ProductionsPage() {
                   
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                     <button
-                      onClick={() => playTrack(track as Track)}
+                      onClick={() => {
+                        if (isYouTubeTrack) {
+                          window.open(track.url, '_blank', 'noopener,noreferrer');
+                          return;
+                        }
+                        playTrack(track as Track);
+                      }}
                       className="w-10 h-10 md:w-14 md:h-14 bg-[#c29226] text-white rounded-full flex items-center justify-center scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl hover:bg-[#deee4d] hover:text-black hover:scale-110 active:scale-90"
                     >
                       {isThisPlaying ? (

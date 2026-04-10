@@ -186,6 +186,7 @@ const MusicSection = () => {
             {displayTracks.map((track) => {
               const isCurrent = currentTrack?.id === track.id;
               const isThisPlaying = isCurrent && isPlaying;
+              const isYouTubeTrack = track.url.toLowerCase().includes('youtube.com') || track.url.toLowerCase().includes('youtu.be');
               const platformLabel = getPlatformLabel(track.url);
 
               return (
@@ -223,6 +224,10 @@ const MusicSection = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             if (isDragging) return;
+                            if (isYouTubeTrack) {
+                              window.open(track.url, '_blank', 'noopener,noreferrer');
+                              return;
+                            }
                             playTrack(track as Track);
                           }}
                           className="w-14 h-14 bg-[#c29226] text-white rounded-full flex items-center justify-center scale-75 group-hover:scale-100 transition-all duration-300 shadow-2xl hover:bg-[#deee4d] hover:text-black hover:scale-110 active:scale-90"
