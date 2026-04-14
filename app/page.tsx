@@ -36,7 +36,7 @@ const jsonLd = {
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
       name: "Jagot Jit",
-      logo: `${siteUrl}/images/jagot2.jpg`,
+      logo: `${siteUrl}/images/jagat.png`,
       inLanguage: "en",
       potentialAction: {
   "@type": "SearchAction",
@@ -47,26 +47,36 @@ const jsonLd = {
     {
       "@type": "ProfessionalService",
       "@id": `${siteUrl}/#service`,
-      name: "Jagot Jit Music Production",
-      url: siteUrl,
-      description:
-        "Music production, mixing, mastering, and audio engineering services for artists worldwide.",
-      areaServed: {
-        "@type": "Place",
-        name: "Worldwide",
-      },
-      address: {
+      "name": "Jagot Jit Music Production",
+      "url": siteUrl,
+      "description":
+        "Best music producer and sound engineer in BD (Bangladesh). Professional mixing, mastering, and audio engineering services.",
+      "image": `${siteUrl}/images/jagot2.jpg`,
+      "address": {
         "@type": "PostalAddress",
-        addressLocality: "Dhaka",
-        addressCountry: "BD",
+        "addressLocality": "Dhaka",
+        "addressCountry": "BD",
+        "addressRegion": "Dhaka Division"
       },
-      serviceType: [
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "23.8103",
+        "longitude": "90.4125"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Bangladesh"
+      },
+      "serviceType": [
         "Music Production",
         "Mixing",
         "Mastering",
         "Audio Engineering",
+        "Music Producers in BD",
+        "Best music producer in BD",
+        "Best mix master in BD"
       ],
-      provider: {
+      "provider": {
         "@id": `${siteUrl}/#person`,
       },
     },

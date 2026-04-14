@@ -7,10 +7,10 @@ export default function AboutSection() {
       {/* --------------------------------------------------------------------------- */}
       {/* 1. DESKTOP/LAPTOP LAYOUT (Visible on md and up) */}
       {/* --------------------------------------------------------------------------- */}
-      <div className="hidden md:flex w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto flex-row items-center gap-8 lg:gap-16 xl:gap-24 2xl:gap-32">
+      <div className="hidden md:flex w-11/12 lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto flex-row items-center gap-8 lg:gap-16 xl:gap-24 2xl:gap-20">
         {/* Image Collage */}
         <div data-aos="fade-right" className="md:w-1/2 mb-10 md:mb-0 flex justify-center">
-          <div className="relative w-full max-w-[300px] lg:max-w-[340px] xl:max-w-[380px] 2xl:max-w-[440px] h-[360px] lg:h-[400px] xl:h-[440px] 2xl:h-[520px]">
+          <div className="relative w-full max-w-[300px] lg:max-w-[340px] xl:max-w-[380px] 2xl:max-w-[400px] h-[360px] lg:h-[400px] xl:h-[440px] 2xl:h-[480px]">
             {/* Top Image (Shifted Left) */}
             <div className="absolute top-0 left-0 2xl:w-[100%] w-[90%] h-[60%] z-10 -translate-x-6 lg:-translate-x-10 xl:-translate-x-14 2xl:-translate-x-20 transition-transform duration-500 hover:scale-105 hover:z-20">
               <Image
@@ -54,7 +54,7 @@ export default function AboutSection() {
            
           </ul>
 
-          <div className="flex flex-nowrap gap-2 lg:gap-3 xl:gap-4 2xl:gap-6 pt-2 lg:pt-4 justify-start">
+          <div className="flex flex-nowrap gap-2 lg:gap-3 xl:gap-4 2xl:gap-4 pt-2 lg:pt-4 justify-start">
             <div className="bg-white/20 backdrop-blur-sm px-2 lg:px-3 xl:px-4 2xl:px-5 py-2 lg:py-3 rounded-md shrink-0">
               <p className="font-geist-mono text-lg lg:text-xl font-bold">5+</p>
               <p className="text-[9px] lg:text-[10px] xl:text-xs">Years Experience</p>

@@ -32,14 +32,16 @@ export const metadata: Metadata = {
     template: "%s | Jagot Jit",
   },
   description:
-    "Music producer and sound engineer in Dhaka. Mixing, mastering, production, session work, and release-ready sound for artists worldwide.",
+    "Jagot Jit is a top-rated music producer and sound engineer in Bangladesh (BD). Professional mixing, mastering, and production services for artists worldwide.",
   keywords: [
     "Jagot Jit",
-    "music producer",
-    "sound engineer",
-    "mixing engineer",
-    "mastering engineer",
+    "music producer in BD",
+    "sound engineer in BD",
+    "best music producer in Bangladesh",
+    "best mix master in BD",
     "Dhaka music producer",
+    "mixing engineer Bangladesh",
+    "mastering engineer BD",
     "audio engineering",
     "music production services",
   ],
@@ -94,6 +96,7 @@ export const metadata: Metadata = {
 import { MusicProvider } from "./Context/MusicContext";
 import MiniPlayer from "./Components/Music/MiniPlayer";
 import Footer from "./Components/Shared/Footer";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function RootLayout({
   children,
@@ -161,6 +164,7 @@ export default function RootLayout({
           <Footer />
           <MiniPlayer />
         </MusicProvider>
+        <GoogleAnalytics gaId="G-H4BFZ3P6T5" />
       </body>
     </html>
   );

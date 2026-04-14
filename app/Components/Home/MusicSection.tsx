@@ -129,7 +129,7 @@ const MusicSection = () => {
               <div className="h-[1px] w-10 lg:w-12 bg-[#c29226]" />
             </div>
             
-            <h2 className="text-3xl xl:text-5xl 2xl:text-6xl font-light tracking-tighter text-white font-geist-mono animate-fade-in-up">
+            <h2 className="text-3xl xl:text-5xl 2xl:text-5xl font-light tracking-tighter text-white font-geist-mono animate-fade-in-up">
               MY <span className="text-[#c29226] italic font-bulgatti block md:inline">Productions</span>
             </h2>
             

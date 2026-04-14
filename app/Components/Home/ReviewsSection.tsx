@@ -2,17 +2,11 @@
 
 import React, { useRef, useState } from 'react';
 import reviewsData from '@/data/reviews.json';
-import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import Image from 'next/image';
-import ReviewModal from './ReviewModal';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
-interface Review {
-  id: string;
-  name: string;
-  designation: string;
-  review: string;
-  image?: string;
-}
+import Link from 'next/link';
+import ReviewModal from './ReviewModal';
+import ReviewCard, { Review } from './ReviewCard';
 
 const reviews = reviewsData as Review[];
 const marqueeReviews = [...reviews, ...reviews];
@@ -56,6 +50,16 @@ const ReviewsSection = () => {
             <h2 className="text-3xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white font-geist-mono">
               Client <span className="text-[#c29226] italic font-bulgatti inline-block transform translate-y-1">Reviews</span>
             </h2>
+          </div>
+
+          <div className="flex items-center gap-4">
+             <Link 
+              href="/reviews" 
+              className="group flex items-center gap-2 text-sm font-bold uppercase tracking-[0.3em] text-[#deee4d] hover:text-white transition-colors"
+            >
+              <span>See All Reviews</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
 
           <div className="flex gap-2 md:hidden mb-2 self-start">
@@ -115,57 +119,6 @@ const ReviewsSection = () => {
   );
 };
 
-interface ReviewCardProps {
-  rev: Review;
-  onExpand: () => void;
-  compact?: boolean;
-}
 
-const ReviewCard = ({ rev, onExpand, compact = false }: ReviewCardProps) => {
-  return (
-    <button
-      type="button"
-      className={`group relative text-left cursor-pointer active:scale-[0.98] transition-transform duration-300 flex-shrink-0 snap-start ${compact ? 'w-[82vw] max-w-[340px]' : 'w-[340px] lg:w-[380px]'}`}
-      onClick={onExpand}
-    >
-      <div className="h-full bg-white/[0.05] md:bg-white/[0.03] backdrop-blur-0 md:backdrop-blur-sm border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 transition-all duration-500 hover:border-[#c29226]/30 hover:bg-white/[0.06] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-start text-left relative">
-        <Quote className="text-[#deee4d]/20 mb-4 group-hover:text-[#deee4d]/40 transition-colors shrink-0 w-8 h-8" />
-
-        <div className="relative w-full">
-          <p className="text-white/70 font-space-grotesk text-[13px] md:text-sm leading-relaxed mb-6 md:mb-8 italic group-hover:text-white/85 transition-colors line-clamp-4">
-            &ldquo;{rev.review}&rdquo;
-          </p>
-        </div>
-
-        <div className="mt-auto flex items-center gap-3 w-full">
-          <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-white/10 bg-white/5 flex-shrink-0">
-            {rev.image ? (
-              <Image
-                src={rev.image}
-                alt={rev.name}
-                fill
-                sizes="48px"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-            ) : (
-              <div className="absolute inset-0 bg-[#c29226]/10 flex items-center justify-center text-white/20 text-xs font-mono">
-                {rev.name.charAt(0)}
-              </div>
-            )}
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <h4 className="text-white font-geist-mono font-medium text-base leading-tight group-hover:text-[#c29226] transition-colors truncate">
-              {rev.name}
-            </h4>
-            <p className="text-[#deee4d]/40 text-[0.6rem] uppercase tracking-widest font-bold mt-1 leading-tight truncate">
-              {rev.designation}
-            </p>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-};
 
 export default ReviewsSection;
